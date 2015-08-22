@@ -1,3 +1,9 @@
 # Created by .ignore support plugin (hsz.mobi)
 
 node_modules
+**/*.js
+**/*.js.map
+!gruntfile.js
+**/*.d.ts
+.tscache
+!typings/financial-planning

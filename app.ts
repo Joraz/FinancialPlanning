@@ -1,78 +1,90 @@
-/**
- * Created by Daniel on 30/06/2015.
- */
-
 /// <reference path="typings/tsd.d.ts" />
 
-var app = angular.module('financialPlanning', ['ui.router']);
+import express = require("express");
+import passport = require("passport");
+import passportLocal = require("passport-local");
+import passportJWT = require("passport-jwt");
 
-app.config(['$stateProvider', '$urlRouterProvider',
-    ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) =>
-    {
-        $stateProvider
-            .state('home', {
-                url: '/home',
-                templateUrl: '/home.html',
-                controller: 'MainCtrl'
-            })
-            .state('posts', {
-                url: '/posts/{id}',
-                templateUrl: '/posts.html',
-                controller: 'PostsCtrl'
-            });
+import Database = require("./database/Database");
+import HashProvider = require("./security/HashProvider");
+import UserDal = require("./database/UserDal");
 
-        $urlRouterProvider.otherwise('home');
-    }]);
+var bodyParser = require("body-parser");
+var transactions = require("./routes/transactions");
+var users = require("./routes/users");
 
-app.controller('MainCtrl', [
-    '$scope', 'posts', ($scope: any, posts: any) =>
-    {
-        $scope.test = 'Hello World!';
+var database = new Database();
+var userDal = new UserDal(database);
 
-        $scope.posts = posts.posts;
+var JWTStrategy = passportJWT.Strategy;
+var LocalStrategy = passportLocal.Strategy;
 
-        $scope.addPost = () =>
-        {
-            if (!$scope.title || $scope.title === '')
-            {
-                return;
-            }
-            $scope.posts.push({
-                title: $scope.title,
-                link: $scope.link,
-                upvotes: 0,
-                comments: [
-                    {author: 'Joe', body: 'Cool post!', upvotes: 0},
-                    {author: 'Bob', body: 'Great idea but everything is wrong!', upvotes: 0}
-                ]
-            });
-            $scope.title = '';
-            $scope.link = '';
-        };
+// App setup
+var app = express();
 
-        $scope.incrementUpvotes = (post) =>
-        {
-            post.upvotes += 1;
-        }
+app.use(express.static(__dirname + '/public'));
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
+app.use(passport.initialize());
 
-    }
-]);
-
-app.controller('PostsCtrl', [
-    '$scope',
-    '$stateParams',
-    'posts',
-    ($scope, $stateParams, posts) =>
-    {
-        $scope.post = posts.posts[$stateParams.id];
-    }
-]);
-
-app.factory('posts', [() =>
+/**
+ * This will add the global database object onto all requests
+ * TODO maybe limit to requests that need it?
+ */
+app.use((request: express.Request, response: express.Response, next: Function) =>
 {
-    var o = {
-        posts: []
-    };
+    request.database = database;
+    next();
+});
 
-    return o;
-}]);
+//Strategy for logging in. After this the client will need to include a json-web-token to authenticate
+passport.use(new LocalStrategy((username: string, password: string, done: Function) =>
+{
+    userDal.getUser(username)
+        .then((user: FinancialPlanning.Users.IUser) =>
+        {
+            return HashProvider.checkHash(password, user.hash)
+                .then((verified: boolean) =>
+                {
+                    if (!verified)
+                    {
+                        return done(null, false);
+                    }
+                    else
+                    {
+                        return done(null, user);
+                    }
+                });
+        })
+        .catch((err: any) =>
+        {
+            if (err && err.indexOf("No item found") !== -1)
+            {
+                return done(null, false);
+            }
+            else
+            {
+                return done(err);
+            }
+        });
+}));
+
+var options: passportJWT.IJwtStrategyOptions = {
+    secretOrKey: "3CF5434AE17036B3F0D32F67AAF9F875F35E0498F1D78F335625BA19E5C38592"
+};
+
+passport.use(new JWTStrategy(options, (jwt_payload: any, done: Function) =>
+{
+    return done(null, jwt_payload._id);
+}));
+
+app.use('/users', users);
+app.use('/transactions', transactions);
+
+var server = app.listen(3000, () =>
+{
+    var host = server.address().address;
+    var port = server.address().port;
+
+    console.log("Example app listening at http://" + host + ":" + port);
+});

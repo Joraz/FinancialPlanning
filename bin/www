@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../app');
+var app = require('../otherapp');
 var debug = require('debug')('financial-planning:server');
 var http = require('http');
 

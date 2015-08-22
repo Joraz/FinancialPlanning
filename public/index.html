@@ -1,0 +1,46 @@
+<!-- index.html -->
+<!doctype html>
+
+<html ng-app="financialPlanning">
+<head>
+    <!-- METADATA -->
+    <meta charset="utf-8">
+
+    <title>Financial Planning Application</title>
+
+    <!-- TODO: use bower for dependencies instead -->
+    <!-- style references -->
+    <link rel="stylesheet"
+          href="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.0/angular-material.min.css">
+    <!-- Angular Material CSS -->
+
+    <!-- js references -->
+
+    <!-- jQuery library -->
+    <script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+    <!-- AngularJS library -->
+    <!--<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>-->
+    <!-- AngularJS debug library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <!-- Angular animate library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-animate.min.js"></script>
+    <!-- Angular aria library  -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.3.15/angular-aria.min.js"></script>
+    <!-- Angular Material library -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.10.1/angular-material.min.js"></script>
+    <!-- Angular UI Router library -->
+    <!--<script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.min.js"></script>-->
+    <!-- Angular UI Router debug library -->
+    <script src="http://angular-ui.github.io/ui-router/release/angular-ui-router.js"></script>
+    <!-- core application file -->
+    <script src="dist/app.js"></script>
+</head>
+
+<body>
+<!-- header, which will stay consistent no matter the current view -->
+<header></header>
+<!--This is the main view, where the views will change depending on the url -->
+<main id="financialPlanningContainer" data-ui-view>
+</main>
+</body>
+</html>
