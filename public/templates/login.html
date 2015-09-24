@@ -1,6 +1,18 @@
 <!-- login.html -->
-<div>
-    <input placeholder="username" data-ng-bind="username">
-    <input placeholder="password" data-ng-bind="password">
-    <button data-ng-click="login()">LOGIN</button>
+<div class="text-center" style="padding:50px 0">
+    <div style="padding: 15px 0; font-size: 25px; color: #aaaaaa; font-weight: bold;">login</div>
+    <form class="form-inline" name="loginForm">
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input class="form-control" id="username" type="text" placeholder="Enter your username" data-ng-model="vm.username"
+                   required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input class="form-control" id="password" type="password" placeholder="Enter your password" data-ng-model="vm.password"
+                   required>
+        </div>
+        <button type="submit" class="btn btn-default" data-ng-click="vm.login()" data-ng-disabled="loginForm.$invalid">Login</button>
+        <button class="btn btn-default pull-right" data-ng-click="vm.createNewUser()">Create a new user</button>
+    </form>
 </div>

@@ -1,0 +1,29 @@
+{
+  "name": "FinancialPlanning",
+  "version": "0.0.0",
+  "homepage": "https://github.com/Joraz/FinancialPlanning",
+  "authors": [
+    "Daniel Young <danieleyoung1984@gmail.com>"
+  ],
+  "moduleType": [
+    "es6"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular": "~1.4.5",
+    "angular-bootstrap": "~0.13.4",
+    "angular-chart.js": "~0.8.2",
+    "angular-toasty": "~1.0.4",
+    "angular-ui-router": "~0.2.15",
+    "bootstrap": "~3.3.5",
+    "jquery": "~2.1.4",
+    "moment": "~2.10.6"
+  }
+}

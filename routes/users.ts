@@ -3,132 +3,245 @@
 import express = require("express");
 import passport = require("passport");
 
-import HashProvider = require("../security/HashProvider");
-import TokenProvider = require("../security/TokenProvider");
+import HashFactory = require("../factories/HashFactory");
+import HttpCodes = require("../enums/HttpCodes");
+import ObjectUtilities = require("../utilities/ObjectUtilities");
+import TokenFactory = require("../factories/TokenFactory");
+import TransactionDal = require("../database/TransactionDal");
+import TransactionUtilities = require("../utilities/TransactionUtilities");
 import UserDal = require("../database/UserDal");
+import UserFactory = require("../factories/UserFactory");
 
 var router: express.Router = express.Router();
 
 /**
  * Create a new user. Will return a jsonwebtoken
  */
-router.post('/', (request: express.Request, response: express.Response) =>
+router.post('/', (httpRequest: express.Request, httpResponse: express.Response) =>
 {
-    var username = request.body.username;
-    var password = request.body.password;
+    var username = httpRequest.body.username;
+    var password = httpRequest.body.password;
+    var balance = httpRequest.body.balance;
+    var preferredName = httpRequest.body.preferredName;
+    var lowLimitWarning = httpRequest.body.lowLimitWarning;
+    var userDal = new UserDal(httpRequest.database);
 
-    if (!username)
+    if (!ObjectUtilities.isDefined(username, true))
     {
-        return response.status(400).send("No Username provided");
+        return httpResponse.status(HttpCodes.badRequest).send("No Username provided");
     }
 
-    if (!password)
+    if (!ObjectUtilities.isDefined(password, true))
     {
-        return response.status(400).send("No Password provided");
+        return httpResponse.status(HttpCodes.badRequest).send("No Password provided");
     }
 
-    HashProvider.createHash(password)
-        .then((passwordHash: FinancialPlanning.Security.IPasswordHash) =>
+    var userOptions: FinancialPlanning.Server.Users.IUserOptions;
+    if (ObjectUtilities.isDefined(preferredName, true))
+    {
+        if (!ObjectUtilities.isDefined(userOptions))
         {
-            var user: FinancialPlanning.Users.IUser = {
-                _id: username,
-                hash: passwordHash.hash,
-                salt: passwordHash.salt
-            };
+            userOptions = {};
+        }
 
-            var userDal = new UserDal(request.database);
+        userOptions.preferredName = preferredName;
+    }
 
-            userDal.createUser(user)
-                .then((databaseResponse: any) =>
-                {
-                    if (databaseResponse["ok"] !== null)
-                    {
-                        var jwt: string = TokenProvider.generateJWT(user);
-                        return response.status(200).send(jwt);
-                    }
-                    else
-                    {
-                        return response.status(500).send("Could not create new user");
-                    }
-                });
+    if (ObjectUtilities.isDefined(lowLimitWarning))
+    {
+        if (!ObjectUtilities.isDefined(userOptions))
+        {
+            userOptions = {};
+        }
+
+        userOptions.lowLimitWarning = lowLimitWarning;
+    }
+
+    UserFactory.createUser(username, password, balance, userOptions)
+        .then((user: FinancialPlanning.Server.Users.IUser) =>
+        {
+            return userDal.createUser(user);
+
         })
-        .catch((error: Error) =>
+        .then((response: FinancialPlanning.Server.Users.IUser) =>
         {
-            return response.status(500).send(error.message);
+            var jwt: string = TokenFactory.generateJWT(response._id);
+            return httpResponse.status(HttpCodes.ok).send(jwt);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message);
+        });
+});
+
+router.put('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let database = httpRequest.database;
+    let userId = httpRequest.user._id;
+    let updatedPreferredName = httpRequest.body.preferredName;
+    let updatedLowLimitWarning = httpRequest.body.lowLimitWarning;
+    let updatedPassword = httpRequest.body.password;
+    let userDal = new UserDal(database);
+    let promises = [];
+
+    if (updatedPreferredName)
+    {
+        promises.push(userDal.updatePreferredName(userId, updatedPreferredName));
+    }
+
+    if (!isNaN(updatedLowLimitWarning))
+    {
+        promises.push(userDal.updateLimitWarning(userId, updatedLowLimitWarning))
+    }
+
+    if (updatedPassword)
+    {
+        HashFactory.createHash(updatedPassword)
+            .then((hash: FinancialPlanning.Server.Security.IPasswordHash) =>
+            {
+                promises.push(userDal.updatePassword(userId, hash));
+            });
+    }
+
+    Promise.all(promises)
+        .then(() =>
+        {
+            return httpResponse.status(HttpCodes.ok).send({});
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
         });
 });
 
 /**
  * Login for user
  */
-router.post('/login', passport.authenticate('local', {session: false}), (request: express.Request, response: express.Response) =>
+router.post('/login', passport.authenticate('local', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
-    var jwt: string = TokenProvider.generateJWT(request.user);
-    return response.status(200).send(jwt);
+    var jwt: string = TokenFactory.generateJWT(httpRequest.user._id);
+    return httpResponse.status(HttpCodes.ok).send(jwt);
 });
 
 /**
  * Update password for a user
  */
-router.post('/updatePassword', passport.authenticate('jwt', {session: false}), (request: express.Request, response: express.Response) =>
+router.post('/updatePassword', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
-    var password = request.body.password;
+    var password = httpRequest.body.password;
 
     if (!password)
     {
-        return response.status(400).send("No Password provided");
+        return httpResponse.status(HttpCodes.badRequest).send("No Password provided");
     }
 
-    HashProvider.createHash(password)
-        .then((hashResponse: FinancialPlanning.Security.IPasswordHash) =>
+    HashFactory.createHash(password)
+        .then((hashResponse: FinancialPlanning.Server.Security.IPasswordHash) =>
         {
-            var database = request.database;
+            var database = httpRequest.database;
             var userDal = new UserDal(database);
-            var userId = request.user;
+            var userId = httpRequest.user._id;
 
-            userDal.updatePassword(userId, hashResponse.hash, hashResponse.salt)
-                .then((databaseResponse: any) =>
+            userDal.updatePassword(userId, {hash: hashResponse.hash, salt: hashResponse.salt})
+                .then((user: FinancialPlanning.Server.Users.IUser) =>
                 {
-                    if (databaseResponse["ok"] !== null)
-                    {
-                        var user: FinancialPlanning.Users.IUser = databaseResponse.value;
-                        var jwt = TokenProvider.generateJWT(user);
-                        return response.status(200).send(jwt);
-                    }
-                    else
-                    {
-                        return response.status(500).send("Could not change password");
-                    }
+                    var jwt = TokenFactory.generateJWT(user._id);
+                    return httpResponse.status(HttpCodes.ok).send(jwt);
                 });
         })
         .catch((error: any) =>
         {
-            return response.status(500).send(error.message);
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
         });
 });
 
-router.delete('/', passport.authenticate('jwt', {session: false}), (request: express.Request, response: express.Response) =>
+/**
+ * Check JWT status
+ */
+router.get('/status', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
-    var database = request.database;
-    var userDal = new UserDal(database);
-    var userId = request.user;
-
-    userDal.deleteUser(userId)
-        .then((databaseResponse: any) =>
-        {
-            if (databaseResponse.result && databaseResponse.result.n && databaseResponse.result.n > 0)
-            {
-                return response.status(200).send({});
-            }
-            else
-            {
-                return response.status(500).send("Could not delete user");
-            }
-        })
-        .catch((error: any) =>
-        {
-            return response.status(500).send(error.message);
-        });
+    //if execution arrives here, then the token has been validated. We can just return an OK response to the client
+    return httpResponse.status(HttpCodes.ok).send({});
 });
+
+/**
+ * Get user summary information
+ */
+router.get('/summary', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var user = httpRequest.user;
+    var userSummary: FinancialPlanning.Common.Users.IUserSummary = {
+        name: user.options && user.options.preferredName ? user.options.preferredName : user._id,
+        balance: user.balance
+    };
+    return httpResponse.status(HttpCodes.ok).send(userSummary);
+});
+
+/**
+ *
+ */
+router.get('/details', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let user = httpRequest.user;
+    let userDetails: FinancialPlanning.Common.Users.IUserDetails = {
+        preferredName: user.options.preferredName || "",
+        lowLimitWarning: user.options.lowLimitWarning
+    };
+    return httpResponse.status(HttpCodes.ok).send(userDetails);
+});
+
+//router.get('/summary/balance', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+//{
+//    var user = <FinancialPlanning.Server.Users.IUser>httpRequest.user;
+//    var db = httpRequest.database;
+//    var transactionDal = new TransactionDal(db);
+//    var start = httpRequest.query.startDate;
+//    if (!ObjectUtilities.isDefined(start, true))
+//    {
+//        return httpResponse.status(HttpCodes.badRequest).send("No start date provided");
+//    }
+//    var end = httpRequest.query.endDate;
+//    if (!ObjectUtilities.isDefined(end, true))
+//    {
+//        return httpResponse.status(HttpCodes.badRequest).send("No end date provided");
+//    }
+//    var balance = user.balance;
+//    var userId = user._id;
+//
+//    transactionDal.getTransactionsForUser(userId)
+//        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransaction>) =>
+//        {
+//            var summaries = TransactionUtilities.createBalanceSummary(transactions, new Date(start), new Date(end), balance);
+//            return httpResponse.status(HttpCodes.ok).send(summaries);
+//        })
+//        .catch((error: any) =>
+//        {
+//            return httpResponse.status(HttpCodes.internalServerError).send(error);
+//        });
+//});
+
+//router.delete('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+//{
+//    var database = httpRequest.database;
+//    var userDal = new UserDal(database);
+//    var userId = httpRequest.user;
+//
+//    userDal.deleteUser(userId)
+//        .then((databaseResponse: any) =>
+//        {
+//            if (databaseResponse.result && databaseResponse.result.n && databaseResponse.result.n > 0)
+//            {
+//                return httpResponse.status(FinancialPlanning.Server.Http.HttpCodes.noContent).send({});
+//            }
+//            else
+//            {
+//                return httpResponse.status(HttpCodes.internalServerError).send("Could not delete user");
+//            }
+//        })
+//        .catch((error: any) =>
+//        {
+//            return httpResponse.status(HttpCodes.internalServerError).send(error);
+//        });
+//});
 
 module.exports = router;

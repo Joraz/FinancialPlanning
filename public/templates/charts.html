@@ -1,0 +1,63 @@
+<div class="col-md-12" style="padding-top: 20px">
+    <!--<div class="row col-md-6">-->
+    <!--<div class="row">-->
+    <!--<div class="col-md-6">-->
+    <!--<p class="input-group">-->
+    <!--<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt"-->
+    <!--is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"-->
+    <!--date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+    <!--<span class="input-group-btn">-->
+    <!--<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+    <!--</span>-->
+    <!--</p>-->
+    <!--</div>-->
+
+    <!--<div class="col-md-6">-->
+    <!--<p class="input-group">-->
+    <!--<input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="status.opened"-->
+    <!--min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"-->
+    <!--date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
+    <!--<span class="input-group-btn">-->
+    <!--<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
+    <!--</span>-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--</div>-->
+
+    <!--<div class="col-md-6">-->
+    <!--<p class="input-group">-->
+    <!--<input type="text" class="form-control" ng-model="vm.transactionsFrom"-->
+    <!--is-open="status.opened" datepicker-options="{formatYear: 'yy'}" close-text="Close"/>-->
+    <!--<span class="input-group-btn">-->
+    <!--<button type="button" class="btn btn-default" ng-click="status.opened = true"><i-->
+    <!--class="glyphicon glyphicon-calendar"></i></button>-->
+    <!--</span>-->
+    <!--</p>-->
+    <!--</div>-->
+    <!--<canvas id="line" class="chart chart-line" chart-data="vm.balances" chart-labels="vm.dates"></canvas>-->
+    <!--</div>-->
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Transactions by Name</h4>
+            <canvas id="doughnutNames" class="chart chart-doughnut" chart-data="vm.donutChartData.nameAdjustments"
+                    chart-labels="vm.donutChartData.nameNames" chart-options="vm.donutChartSettings"></canvas>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <h4>Transactions by Classification</h4>
+            <canvas id="doughnutClassifications" class="chart chart-doughnut col-md-6"
+                    chart-data="vm.donutChartData.classificationAdjustments"
+                    chart-labels="vm.donutChartData.classificationNames" chart-options="vm.donutChartSettings"></canvas>
+        </div>
+    </div>
+    <!--<div class="row">-->
+        <!--<div class="col-md-4">-->
+            <!--<h4>Transactions by Sub-Classification</h4>-->
+            <!--<canvas id="doughnutSubClassifications" class="chart chart-doughnut col-md-6"-->
+                    <!--chart-data="vm.donutChartData.subClassificationAdjustments"-->
+                    <!--chart-labels="vm.donutChartData.subClassificationNames"-->
+                    <!--chart-options="vm.donutChartSettings"></canvas>-->
+        <!--</div>-->
+    <!--</div>-->
+</div>

@@ -1,4 +1,4 @@
-enum HttpCodes
+const enum HttpCodes
 {
     /**
      * Success codes
@@ -29,4 +29,5 @@ enum HttpCodes
 
     serviceUnavailable = 503
 }
-export = HttpCodes
+
+export = HttpCodes;

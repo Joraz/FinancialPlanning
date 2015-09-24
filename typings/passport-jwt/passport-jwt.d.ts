@@ -21,6 +21,11 @@ declare module 'passport-jwt'
         passReqToCallback?: boolean;
     }
 
+    interface IJwtVerifyFunctionWithRequest
+    {
+        (request: express.Request, jwt_payload: any, done: (error: any, user?: any, info?: any) => void): void;
+    }
+
     interface IJwtVerifyFunction
     {
         (jwt_payload: any, done: (error: any, user?: any, info?: any) => void): void;
@@ -29,6 +34,7 @@ declare module 'passport-jwt'
     class Strategy implements passport.Strategy
     {
         constructor(options: IJwtStrategyOptions, verify: IJwtVerifyFunction);
+        constructor(options: IJwtStrategyOptions, verify: IJwtVerifyFunctionWithRequest);
 
         name: string;
         authenticate: (req: express.Request, options?: Object) => void;

@@ -4,8 +4,6 @@ module FinancialPlanning
 {
     export interface ILoginControllerScope extends ng.IScope
     {
-        username: string;
-
-        password: string;
+        vm: ILoginController;
     }
 }

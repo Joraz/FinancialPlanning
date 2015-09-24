@@ -6,18 +6,18 @@ import passportLocal = require("passport-local");
 import passportJWT = require("passport-jwt");
 
 import Database = require("./database/Database");
-import HashProvider = require("./security/HashProvider");
+import HashFactory = require("./factories/HashFactory");
+import TransactionDal = require("./database/TransactionDal");
+import TransactionFactory = require("./factories/TransactionFactory");
 import UserDal = require("./database/UserDal");
 
 var bodyParser = require("body-parser");
 var transactions = require("./routes/transactions");
 var users = require("./routes/users");
 
-var database = new Database();
-var userDal = new UserDal(database);
-
-var JWTStrategy = passportJWT.Strategy;
-var LocalStrategy = passportLocal.Strategy;
+var database: FinancialPlanning.Server.Database.IDatabase = new Database();
+var userDal: UserDal = new UserDal(database);
+var transactionDal: TransactionDal = new TransactionDal(database);
 
 // App setup
 var app = express();
@@ -37,13 +37,15 @@ app.use((request: express.Request, response: express.Response, next: Function) =
     next();
 });
 
-//Strategy for logging in. After this the client will need to include a json-web-token to authenticate
-passport.use(new LocalStrategy((username: string, password: string, done: Function) =>
+/**
+ * Strategy for logging in
+ */
+passport.use(new passportLocal.Strategy((username: string, password: string, done: Function) =>
 {
     userDal.getUser(username)
-        .then((user: FinancialPlanning.Users.IUser) =>
+        .then((user: FinancialPlanning.Server.Users.IUser) =>
         {
-            return HashProvider.checkHash(password, user.hash)
+            return HashFactory.checkHash(password, user.hash)
                 .then((verified: boolean) =>
                 {
                     if (!verified)
@@ -58,33 +60,32 @@ passport.use(new LocalStrategy((username: string, password: string, done: Functi
         })
         .catch((err: any) =>
         {
-            if (err && err.indexOf("No item found") !== -1)
-            {
-                return done(null, false);
-            }
-            else
-            {
-                return done(err);
-            }
+            return done(null, false, {message: "Could not verify user"});
         });
 }));
 
 var options: passportJWT.IJwtStrategyOptions = {
-    secretOrKey: "3CF5434AE17036B3F0D32F67AAF9F875F35E0498F1D78F335625BA19E5C38592"
+    secretOrKey: "3CF5434AE17036B3F0D32F67AAF9F875F35E0498F1D78F335625BA19E5C38592",
+    passReqToCallback: true
 };
 
-passport.use(new JWTStrategy(options, (jwt_payload: any, done: Function) =>
+/**
+ * Strategy for validating requests with a json-web-token
+ */
+passport.use(new passportJWT.Strategy(options, (request: express.Request, jwt_payload: any, done: Function) =>
 {
-    return done(null, jwt_payload._id);
+    userDal.getUser(jwt_payload._id)
+        .then((user: FinancialPlanning.Server.Users.IUser) =>
+        {
+            return done(null, user);
+        })
+        .catch((error: any) =>
+        {
+            return done(error);
+        });
 }));
 
 app.use('/users', users);
 app.use('/transactions', transactions);
 
-var server = app.listen(3000, () =>
-{
-    var host = server.address().address;
-    var port = server.address().port;
-
-    console.log("Example app listening at http://" + host + ":" + port);
-});
+var server = app.listen(3000);

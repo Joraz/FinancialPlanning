@@ -1,0 +1,11 @@
+<!-- home.html -->
+<div class="page-header text-center">
+    <h1>Welcome back {{vm.name}}, your current balance is &pound;{{vm.balance | number: 2}}</h1>
+</div>
+<ul class="nav nav-pills nav-justified">
+    <li data-ng-class="{ active: vm.isActive('/charts')}" role="presentation"><a ui-sref=".charts">Home</a></li>
+    <li data-ng-class="{ active: vm.isActive('/transaction-types')}" role="presentation"><a ui-sref=".transactionTypes">Transaction Type Management</a></li>
+    <li data-ng-class="{ active: vm.isActive('/transactions')}" role="presentation"><a ui-sref=".transactions">Transaction Management</a></li>
+    <li data-ng-class="{ active: vm.isActive('/edit-user')}" role="presentation"><a ui-sref=".editUser">Edit User Options</a></li>
+</ul>
+<div ui-view></div>

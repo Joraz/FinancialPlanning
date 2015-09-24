@@ -1,0 +1,31 @@
+<!-- new-user.html -->
+<form name="newUserForm">
+    <div class="form-group">
+        <label for="username">Enter your desired username (required)</label>
+        <input class="form-control" id="username" type="text" placeholder="Username" data-ng-model="vm.username"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="password">Enter your desired password (required)</label>
+        <input class="form-control" id="password" type="password" placeholder="Password" data-ng-model="vm.password"
+               required>
+    </div>
+    <div class="form-group">
+        <label for="balance">Enter your starting balance (optional)</label>
+        <input class="form-control" id="balance" type="number" step="any" placeholder="Starting balance"
+               data-ng-model="vm.balance">
+    </div>
+    <div class="form-group">
+        <label for="preferredName">What should I call you? (optional)</label>
+        <input class="form-control" id="preferredName" type="text" placeholder="Preferred name"
+               data-ng-model="vm.preferredName">
+    </div>
+    <div class="form-group">
+        <label for="lowLimitWarning">Enter your balance warning limit (optional)</label>
+        <input class="form-control" id="lowLimitWarning" type="number" step="any" placeholder="Balance alert"
+               data-ng-model="vm.lowLimitWarning">
+    </div>
+    <button class="btn btn-default pull-left" data-ng-click="vm.createUser()" data-ng-disabled="newUserForm.$invalid">
+        Create User
+    </button>
+</form>

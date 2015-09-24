@@ -2,33 +2,42 @@
 
 module FinancialPlanning
 {
-    export class LoginController
+    export class LoginController implements ILoginController
     {
-        private loginService: ILoginService;
-        private scope: ILoginControllerScope;
+        public static $inject = ['$scope', '$state', 'loginService', 'toasty'];
 
-        public static $inject = ['$scope', 'loginService'];
+        public username = "";
+        public password = "";
 
-        constructor($scope: ILoginControllerScope, loginService: ILoginService)
+        constructor(public $scope: ILoginControllerScope, public $state: ng.ui.IStateService,
+                    public loginService: ILoginService, public toasty: toasty.IToastyService)
         {
-            this.scope = $scope;
-            this.loginService = loginService;
+            $scope.vm = this;
         }
 
-        public login()
+        public login(): void
         {
-            console.log(this.scope.username);
-            console.log(this.scope.password);
-
-            this.loginService.login(this.scope.username, this.scope.password)
-                .then((response: any) =>
+            this.loginService.login(this.username, this.password)
+                .then(() =>
                 {
-                    console.log(response);
+                    this.toasty.success({
+                        title: "Success",
+                        msg: "Successfully logged in"
+                    });
+                    this.$state.go("home.charts");
                 })
                 .catch((error: any) =>
                 {
-                    console.log(error);
+                    this.toasty.error({
+                        title: "Error Logging In",
+                        msg: error.data
+                    });
                 });
+        }
+
+        public createNewUser(): void
+        {
+            this.$state.go("createUser");
         }
     }
 }

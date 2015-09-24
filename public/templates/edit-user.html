@@ -1,0 +1,16 @@
+<!-- edit-user.html -->
+<form name="editUserForm">
+    <div class="form-group">
+        <label for="preferredName">Enter preferred name: </label>
+        <input class="form-control" id="preferredName" type="text" placeholder="Preferred Name" data-ng-model="vm.preferredName">
+    </div>
+    <div class="form-group">
+        <label for="lowLimitWarning">Enter limit warning: </label>
+        <input class="form-control" id="lowLimitWarning" type="number" step="any" placeholder="Low Limit Warning" data-ng-model="vm.lowLimitWarning">
+    </div>
+    <div class="form-group">
+        <label for="password">Enter password: </label>
+        <input class="form-control" id="password" type="password" placeholder="password" data-ng-model="vm.password">
+    </div>
+    <button class="btn btn-default" data-ng-click="vm.saveUserDetails()">Save Changes</button>
+</form>
