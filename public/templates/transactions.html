@@ -1,59 +1,99 @@
 <!-- transactions.html -->
 <div class="col-md-12" style="padding-top: 20px">
-    <div class="col-md-3">
-        <button class="btn btn-default" data-ng-click="vm.addNewTransaction()">Add a new transaction</button>
+    <div class="row">
+        <h4 class="col-md-3">Please select an option</h4>
     </div>
-    <div class="col-md-9">
-        <div data-ng-if="vm.addingNewTransaction">
-            <form name="transactionEdit">
-                <div class="form-group">
-                    <label for="transactionType">Choose a transaction type to associate this transaction to: </label>
-                    <select name="transactionType" id="transactionType" data-ng-model="vm.selectedTransactionType"
-                            data-ng-required="true"
-                            data-ng-options="transactionType.name for transactionType in vm.transactionTypes track by transactionType._id">
-                        <option value="">-- Please select an option --</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label for="isRecurring">Is the transaction recurring? </label>
-
-                    <input class="checkbox form-control" id="isRecurring" name="isRecurring" type="checkbox"
-                           data-ng-model="vm.newTransactionIsRecurring">
-                </div>
-                <div class="form-group">
-                    <label for="adjustment">Please enter the transaction amount: </label>
-                    <input id="adjustment" name="adjustment" type="number" step="any"
-                           data-ng-model="vm.newTransactionAdjustment" required>
-                </div>
-                <div class="form-group">
-                    <label for="datePick">Select the{{vm.newTransactionIsRecurring ? ' starting ' : ' '}}transaction
-                        date</label>
-                    <datepicker id="datePick" name="datePick" data-ng-model="vm.newTransactionDate"
-                                required></datepicker>
-                </div>
-                <button class="btn btn-default pull-right"
-                        data-ng-disabled="transactionEdit.$invalid" data-ng-click="vm.saveNewTransaction()">Save
-                </button>
-            </form>
+    <div class="row">
+        <div class="col-md-3">
+            <ul class="nav nav-pills nav-stacked">
+                <li data-ng-click="vm.viewRecentTransactions()"
+                    data-ng-class="{ active: !vm.addingNewTransaction && !vm.viewingRecurringTransactions}">
+                    <a href="javascript:void(0)">View recent transactions</a></li>
+                <li data-ng-click="vm.addNewTransaction()"
+                    data-ng-class="{ active: vm.addingNewTransaction && !vm.viewingRecurringTransactions}">
+                    <a href="javascript:void(0)">Add a new transaction</a></li>
+                <li data-ng-click="vm.viewRecurringTransactions()"
+                    data-ng-class="{ active: !vm.addingNewTransaction && vm.viewingRecurringTransactions}">
+                    <a href="javascript:void(0)">View recurring
+                        transactions</a></li>
+            </ul>
         </div>
-        <div data-ng-if="!vm.addingNewTransaction">
-            <h3>Recent Transactions</h3>
-            <div class="panel panel-default">
-                <div class="panel-heading clearfix">
-                    <h3 class="panel-title">
-                        <!--Transaction Date-->
-                        <span class="col-md-2">Transaction Date</span>
-                        <span class="col-md-5">Transaction Name</span>
-                        <span class="col-md-5">Transaction Amount</span>
-                    </h3>
+        <div class="col-md-5 col-md-offset-2">
+            <!-- view recent transactions -->
+            <div data-ng-if="!vm.addingNewTransaction && !vm.viewingRecurringTransactions">
+                <h3>Recent Transactions</h3>
+                <table class="table table-hover">
+                    <thead>
+                    <tr>
+                        <th>Transaction Date</th>
+                        <th>Transaction Name</th>
+                        <th>Transaction Amount</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr data-ng-repeat="transaction in vm.transactionSummaries.slice(0, 5)">
+                        <td>{{transaction.transactionDate | date}}</td>
+                        <td>{{transaction.name}}</td>
+                        <td>{{transaction.adjustment | currency: "&pound;"}}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+            <!-- add new transactions -->
+            <div data-ng-if="vm.addingNewTransaction && !vm.viewingRecurringTransactions">
+                <div style="margin-bottom: 40px;">
+                    <form class="fp-form" name="vm.transactionEdit">
+                        <div class="form-group">
+                            <label for="transactionType">Choose a transaction type to associate this transaction
+                                to: </label>
+                            <select name="transactionType" id="transactionType"
+                                    data-ng-model="vm.selectedTransactionType"
+                                    data-ng-required="true"
+                                    data-ng-options="transactionType.name for transactionType in vm.transactionTypes track by transactionType._id">
+                                <option value="">-- Please select an option --</option>
+                            </select>
+                        </div>
+                        <div class="checkbox">
+                            <label for="isRecurring" style="font-weight: 700;">
+                                <input id="isRecurring" name="isRecurring" type="checkbox"
+                                       data-ng-model="vm.newTransactionIsRecurring"> Transaction is recurring </label>
+                        </div>
+                        <div class="form-group">
+                            <label for="adjustment">Please enter the transaction amount: </label>
+                            <input id="adjustment" name="adjustment" type="number" step="any"
+                                   data-ng-model="vm.newTransactionAdjustment" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="datePick">Select the{{vm.newTransactionIsRecurring ? ' starting ' : '
+                                '}}transaction
+                                date</label>
+                            <datepicker id="datePick" name="datePick" data-ng-model="vm.newTransactionDate"
+                                        required></datepicker>
+                        </div>
+                        <button class="btn btn-success col-md-4 col-md-offset-4"
+                                data-ng-disabled="transactionEdit.$invalid" data-ng-click="vm.saveNewTransaction()">Save
+                        </button>
+                    </form>
                 </div>
             </div>
-            <div class="panel panel-default" data-ng-repeat="transaction in vm.transactionSummaries.slice(0, 5)">
-                <div class="panel-body">
-                    <span class="col-md-2">{{transaction.transactionDate | date}}</span>
-                    <span class="col-md-5">{{transaction.name}}</span>
-                    <span class="col-md-5">{{transaction.adjustment | currency}}</span>
-                </div>
+            <!-- view recurring transactions -->
+            <div data-ng-if="!vm.addingNewTransaction && vm.viewingRecurringTransactions">
+                <accordion close-others="true">
+                    <accordion-group data-ng-repeat="transaction in vm.recurringTransactions"
+                                     heading="{{vm.getTransactionName(transaction._id)}}">
+                        <p>Date started: {{transaction.startDate | date}}</p>
+
+                        <p>Last transaction: {{transaction.transactions[transaction.transactions.length
+                            -1].transactionDate
+                            | date}}</p>
+
+                        <p>Adjustment: {{transaction.adjustment}}</p>
+                        <button class="btn btn-danger" data-ng-disabled="!transaction.isActive"
+                                data-ng-click="vm.cancelRecurringTransaction(transaction._id)">Cancel recurring
+                            transaction
+                        </button>
+                    </accordion-group>
+                </accordion>
             </div>
         </div>
     </div>

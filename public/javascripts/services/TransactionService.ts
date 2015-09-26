@@ -43,6 +43,79 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        public getRecurringTransactionInstances(startDate?: Date, endDate?: Date): ng.IPromise<Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>>
+        {
+            var deferred = this.$q.defer();
+
+            var params: any = {};
+
+            if (startDate)
+            {
+                params.startDate = startDate;
+            }
+
+            if (endDate)
+            {
+                params.endDate = endDate;
+            }
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                params: params,
+                headers: {
+                    Authorization: this.loginService.getJWT()
+                }
+            };
+
+            this.$http.get("http://localhost:3000/transactions/recurring", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>>) =>
+                {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        public getIncomingTotals(): ng.IPromise<Array<FinancialPlanning.Common.Transactions.IMonthTotal>>
+        {
+            var deferred = this.$q.defer();
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                headers: {
+                    Authorization: this.loginService.getJWT()
+                }
+            };
+
+            this.$http.get("http://localhost:3000/transactions/incoming/totals", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<Array<FinancialPlanning.Common.Transactions.IMonthTotal>>) =>
+                {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        public getOutgoingTotals(): ng.IPromise<Array<FinancialPlanning.Common.Transactions.IMonthTotal>>
+        {
+            var deferred = this.$q.defer();
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                headers: {
+                    Authorization: this.loginService.getJWT()
+                }
+            };
+
+            this.$http.get("http://localhost:3000/transactions/outgoing/totals", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<Array<FinancialPlanning.Common.Transactions.IMonthTotal>>) =>
+                {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
         public getTransactionSummaries(startDate?: Date, endDate?: Date): ng.IPromise<Array<FinancialPlanning.Common.Transactions.ITransactionSummary>>
         {
             var deferred = this.$q.defer();
@@ -128,23 +201,22 @@ module FinancialPlanning
             return deferred.promise;
         }
 
-        public cancelRecurringTransaction(transactionInstanceId: string)
+        public cancelRecurringTransaction(transactionInstanceId: string): ng.IPromise<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>
         {
             var deferred = this.$q.defer();
 
-            var params: any = {
+            var data: any = {
                 transactionId: transactionInstanceId
             };
 
             var requestConfig: ng.IRequestShortcutConfig = {
-                params: params,
                 headers: {
                     Authorization: this.loginService.getJWT()
                 }
             };
 
-            this.$http.post('http://localhost:3000/transactions/recurring/cancel', requestConfig)
-                .then((response: ng.IHttpPromiseCallbackArg<boolean>) =>
+            this.$http.post('http://localhost:3000/transactions/recurring/cancel', data, requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>) =>
                 {
                     deferred.resolve(response.data);
                 })

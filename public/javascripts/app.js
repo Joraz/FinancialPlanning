@@ -9,6 +9,19 @@ var FinancialPlanning;
         .controller('chartController', FinancialPlanning.ChartController)
         .controller('transactionController', FinancialPlanning.TransactionController)
         .controller('userEditController', FinancialPlanning.UserEditController)
+        .controller('modalController', function ($scope, $modalInstance, $state, loginService, toasty) {
+        $scope.confirm = function () {
+            loginService.deleteUser()
+                .then(function () {
+                $modalInstance.close();
+                $state.go("login");
+                toasty.success("User account deleted");
+            })
+                .catch(function () {
+                toasty.error("Could not delete user");
+            });
+        };
+    })
         .service('loginService', FinancialPlanning.LoginService)
         .service('transactionService', FinancialPlanning.TransactionService);
     app
@@ -48,6 +61,18 @@ var FinancialPlanning;
                 resolve: {
                     transactionSummaries: function (transactionService) {
                         return transactionService.getTransactionSummaries(moment().subtract(30, "day").toDate(), new Date());
+                    },
+                    balanceSummaries: function (loginService) {
+                        return loginService.getBalanceSummary(moment().subtract(30, "day").toDate(), new Date());
+                    },
+                    balanceForecast: function (loginService) {
+                        return loginService.getBalanceForecast();
+                    },
+                    incomingTotals: function (transactionService) {
+                        return transactionService.getIncomingTotals();
+                    },
+                    outgoingTotals: function (transactionService) {
+                        return transactionService.getOutgoingTotals();
                     }
                 }
             })
@@ -77,6 +102,9 @@ var FinancialPlanning;
                     },
                     transactionSummaries: function (transactionService) {
                         return transactionService.getTransactionSummaries(moment().subtract(30, 'day').toDate(), moment().toDate());
+                    },
+                    recurringTransactions: function (transactionService) {
+                        return transactionService.getRecurringTransactionInstances();
                     }
                 }
             })
@@ -105,6 +133,18 @@ var FinancialPlanning;
                 shake: false,
                 html: true,
                 theme: 'bootstrap'
+            });
+        }])
+        .config(['ChartJsProvider', function (ChartJsProvider) {
+            ChartJsProvider.setOptions('Bar', {
+                colours: ['#1266AA', '#EB7933']
+            });
+            ChartJsProvider.setOptions('Doughnut', {
+                colours: ['#39AA4E', '#55BCA7', '#367AB7', '#605298', '#8C68A6', '#A974AC', '#AA3866', '#E75935',
+                    '#ED7D3B', '#F7BC4E', '#F9ED5B', '#BDD44D']
+            });
+            ChartJsProvider.setOptions('Line', {
+                colours: ['#1A663A']
             });
         }])
         .run(['$rootScope', '$state', 'loginService', 'toasty',

@@ -8,6 +8,7 @@ import HttpCodes = require("../enums/HttpCodes");
 import ObjectUtilities = require("../utilities/ObjectUtilities");
 import TokenFactory = require("../factories/TokenFactory");
 import TransactionDal = require("../database/TransactionDal");
+import TransactionTypeDal = require("../database/TransactionTypeDal");
 import TransactionUtilities = require("../utilities/TransactionUtilities");
 import UserDal = require("../database/UserDal");
 import UserFactory = require("../factories/UserFactory");
@@ -74,6 +75,9 @@ router.post('/', (httpRequest: express.Request, httpResponse: express.Response) 
         });
 });
 
+/**
+ *
+ */
 router.put('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     let database = httpRequest.database;
@@ -174,6 +178,11 @@ router.get('/summary', passport.authenticate('jwt', {session: false}), (httpRequ
         name: user.options && user.options.preferredName ? user.options.preferredName : user._id,
         balance: user.balance
     };
+
+    if (user.options && !isNaN(user.options.lowLimitWarning))
+    {
+        userSummary.limitWarning = user.options.lowLimitWarning;
+    }
     return httpResponse.status(HttpCodes.ok).send(userSummary);
 });
 
@@ -190,58 +199,86 @@ router.get('/details', passport.authenticate('jwt', {session: false}), (httpRequ
     return httpResponse.status(HttpCodes.ok).send(userDetails);
 });
 
-//router.get('/summary/balance', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-//{
-//    var user = <FinancialPlanning.Server.Users.IUser>httpRequest.user;
-//    var db = httpRequest.database;
-//    var transactionDal = new TransactionDal(db);
-//    var start = httpRequest.query.startDate;
-//    if (!ObjectUtilities.isDefined(start, true))
-//    {
-//        return httpResponse.status(HttpCodes.badRequest).send("No start date provided");
-//    }
-//    var end = httpRequest.query.endDate;
-//    if (!ObjectUtilities.isDefined(end, true))
-//    {
-//        return httpResponse.status(HttpCodes.badRequest).send("No end date provided");
-//    }
-//    var balance = user.balance;
-//    var userId = user._id;
-//
-//    transactionDal.getTransactionsForUser(userId)
-//        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransaction>) =>
-//        {
-//            var summaries = TransactionUtilities.createBalanceSummary(transactions, new Date(start), new Date(end), balance);
-//            return httpResponse.status(HttpCodes.ok).send(summaries);
-//        })
-//        .catch((error: any) =>
-//        {
-//            return httpResponse.status(HttpCodes.internalServerError).send(error);
-//        });
-//});
+/**
+ *
+ */
+router.get('/summary/balance', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var user = httpRequest.user;
+    var db = httpRequest.database;
+    var transactionDal = new TransactionDal(db);
+    var start = httpRequest.query.startDate;
+    if (!ObjectUtilities.isDefined(start, true))
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No start date provided");
+    }
+    var end = httpRequest.query.endDate;
+    if (!ObjectUtilities.isDefined(end, true))
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No end date provided");
+    }
+    var balance = user.balance;
+    var userId = user._id;
 
-//router.delete('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-//{
-//    var database = httpRequest.database;
-//    var userDal = new UserDal(database);
-//    var userId = httpRequest.user;
-//
-//    userDal.deleteUser(userId)
-//        .then((databaseResponse: any) =>
-//        {
-//            if (databaseResponse.result && databaseResponse.result.n && databaseResponse.result.n > 0)
-//            {
-//                return httpResponse.status(FinancialPlanning.Server.Http.HttpCodes.noContent).send({});
-//            }
-//            else
-//            {
-//                return httpResponse.status(HttpCodes.internalServerError).send("Could not delete user");
-//            }
-//        })
-//        .catch((error: any) =>
-//        {
-//            return httpResponse.status(HttpCodes.internalServerError).send(error);
-//        });
-//});
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            var summaries = TransactionUtilities.createBalanceSummary(transactions, new Date(start), new Date(end), balance);
+            return httpResponse.status(HttpCodes.ok).send(summaries);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ *
+ */
+router.get('/forecast', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let currentBalance = httpRequest.user.balance;
+    let userId = httpRequest.user._id;
+    let db = httpRequest.database;
+    let transactionDal = new TransactionDal(db);
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            let filtered = transactions.filter(x => x.hasOwnProperty('isActive'));
+            let summaries = TransactionUtilities.createBalanceForecast(<Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>>filtered, currentBalance);
+            return httpResponse.status(HttpCodes.ok).send(summaries);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ *
+ */
+router.delete('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var database = httpRequest.database;
+    var userDal = new UserDal(database);
+    var transactionDal = new TransactionDal(database);
+    var transactionTypeDal = new TransactionTypeDal(database);
+    var userId = httpRequest.user._id;
+    var promises = [];
+    promises.push(userDal.deleteUser(userId));
+    promises.push(transactionDal.deleteTransactionsForUser(userId));
+    promises.push(transactionTypeDal.deleteAllTransactionTypesForUser(userId));
+
+    Promise.all(promises)
+        .then(() =>
+        {
+            return httpResponse.status(HttpCodes.ok).send({});
+        })
+        .catch((error: any) =>
+        {
+            console.log(JSON.stringify(error, null, 2));
+            return httpResponse.status(HttpCodes.internalServerError).send(error);
+        });
+});
 
 module.exports = router;

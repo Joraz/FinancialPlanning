@@ -24,7 +24,7 @@
     "passport": "^0.2.2",
     "passport-jwt": "^1.1.0",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.2.1",
+    "serve-favicon": "^2.2.1",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

@@ -136,6 +136,9 @@ declare module FinancialPlanning
         {
             interface IAdjustmentSummary
             {
+                /**
+                 * YYYY-MM-DD format
+                 */
                 date: string;
 
                 adjustment: number;
@@ -158,14 +161,13 @@ declare module FinancialPlanning
                  * Users balance
                  */
                 balance: number;
+
+                limitWarning?: number;
             }
 
             interface IBalanceSummary
             {
-                /**
-                 * In YYYY-MM-DD format
-                 */
-                date: string;
+                date: Date;
 
                 balance: number;
             }
@@ -244,6 +246,13 @@ declare module FinancialPlanning
                 transactionDate: Date;
 
                 adjustment: number;
+            }
+
+            interface IMonthTotal
+            {
+                month: string;
+
+                total: number;
             }
         }
     }

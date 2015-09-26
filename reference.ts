@@ -1,6 +1,7 @@
 /// <reference path="./typings/angularjs/angular.d.ts" />
 /// <reference path="./typings/angular-toasty/angular-toasty.d.ts" />
 /// <reference path="./typings/angular-ui-router/angular-ui-router.d.ts" />
+/// <reference path="./typings/angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
 /// <reference path="./typings/financial-planning/financial-planning.d.ts" />
 /// <reference path="./typings/moment/moment.d.ts" />
 /// <reference path="./typings/chartjs/chart.d.ts" />

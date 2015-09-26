@@ -29,7 +29,7 @@ module FinancialPlanning
                         title: "Success",
                         msg: "Successfully created user " + this.username
                     });
-                    this.$state.go("home");
+                    this.$state.go("home.charts");
                 })
                 .catch((error: any) =>
                 {

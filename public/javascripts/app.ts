@@ -10,6 +10,23 @@ module FinancialPlanning
         .controller('chartController', ChartController)
         .controller('transactionController', TransactionController)
         .controller('userEditController', UserEditController)
+        .controller('modalController', ($scope, $modalInstance: ng.ui.bootstrap.IModalServiceInstance, $state: ng.ui.IStateService, loginService: ILoginService, toasty: toasty.IToastyService) =>
+        {
+            $scope.confirm = () =>
+            {
+                loginService.deleteUser()
+                    .then(() =>
+                    {
+                        $modalInstance.close();
+                        $state.go("login");
+                        toasty.success("User account deleted");
+                    })
+                    .catch(() =>
+                    {
+                        toasty.error("Could not delete user");
+                    });
+            }
+        })
         .service('loginService', LoginService)
         .service('transactionService', TransactionService);
 
@@ -52,6 +69,22 @@ module FinancialPlanning
                         transactionSummaries: (transactionService: ITransactionService) =>
                         {
                             return transactionService.getTransactionSummaries(moment().subtract(30, "day").toDate(), new Date());
+                        },
+                        balanceSummaries: (loginService: ILoginService) =>
+                        {
+                            return loginService.getBalanceSummary(moment().subtract(30, "day").toDate(), new Date());
+                        },
+                        balanceForecast: (loginService: ILoginService) =>
+                        {
+                            return loginService.getBalanceForecast();
+                        },
+                        incomingTotals: (transactionService: ITransactionService) =>
+                        {
+                            return transactionService.getIncomingTotals();
+                        },
+                        outgoingTotals: (transactionService: ITransactionService) =>
+                        {
+                            return transactionService.getOutgoingTotals();
                         }
                     }
                 })
@@ -84,10 +117,14 @@ module FinancialPlanning
                         transactionSummaries: (transactionService: ITransactionService) =>
                         {
                             return transactionService.getTransactionSummaries(moment().subtract(30, 'day').toDate(), moment().toDate());
+                        },
+                        recurringTransactions: (transactionService: ITransactionService) =>
+                        {
+                            return transactionService.getRecurringTransactionInstances();
                         }
                     }
                 })
-            .state("home.editUser", {
+                .state("home.editUser", {
                     templateUrl: "templates/edit-user.html",
                     controller: "userEditController",
                     url: "/edit-user",
@@ -116,6 +153,21 @@ module FinancialPlanning
                 html: true,
                 theme: 'bootstrap'
             })
+        }])
+        .config(['ChartJsProvider', (ChartJsProvider) =>
+        {
+            ChartJsProvider.setOptions('Bar', {
+                colours: ['#1266AA', '#EB7933']
+            });
+
+            ChartJsProvider.setOptions('Doughnut', {
+                colours: ['#39AA4E', '#55BCA7', '#367AB7', '#605298', '#8C68A6', '#A974AC', '#AA3866', '#E75935',
+                '#ED7D3B', '#F7BC4E', '#F9ED5B', '#BDD44D']
+            });
+
+            ChartJsProvider.setOptions('Line', {
+                colours: ['#1A663A']
+            });
         }])
         .run(['$rootScope', '$state', 'loginService', 'toasty',
             ($rootScope: FinancialPlanning.IAppRootScope, $state: ng.ui.IStateService,

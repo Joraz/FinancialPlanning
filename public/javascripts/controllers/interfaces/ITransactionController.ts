@@ -10,7 +10,6 @@ module FinancialPlanning
         recurringTransactions: Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>;
         nonRecurringTransactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>;
         addingNewTransaction: boolean;
-        sortTransactions(transactions: Array<FinancialPlanning.Common.Transactions.ITransaction>): void;
         addNewTransaction(): void;
         saveNewTransaction(): void;
     }

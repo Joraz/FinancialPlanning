@@ -12,12 +12,12 @@ import TransactionFactory = require("./factories/TransactionFactory");
 import UserDal = require("./database/UserDal");
 
 var bodyParser = require("body-parser");
+var favicon = require("serve-favicon");
 var transactions = require("./routes/transactions");
 var users = require("./routes/users");
 
 var database: FinancialPlanning.Server.Database.IDatabase = new Database();
 var userDal: UserDal = new UserDal(database);
-var transactionDal: TransactionDal = new TransactionDal(database);
 
 // App setup
 var app = express();
@@ -26,6 +26,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
+app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 /**
  * This will add the global database object onto all requests

@@ -1,18 +1,38 @@
 <!-- login.html -->
-<div class="text-center" style="padding:50px 0">
-    <div style="padding: 15px 0; font-size: 25px; color: #aaaaaa; font-weight: bold;">login</div>
-    <form class="form-inline" name="loginForm">
-        <div class="form-group">
-            <label for="username">Username:</label>
-            <input class="form-control" id="username" type="text" placeholder="Enter your username" data-ng-model="vm.username"
-                   required>
+<div class="container">
+    <div class="row">
+        <div class="col-md-4 col-md-offset-4">
+            <h1 class="text-center form-title">Login</h1>
+            <div class="form-wall">
+                <form class="fp-form" name="loginForm">
+                    <div class="form-group">
+                        <div class="input-group">
+                            <span class="input-group-addon"><span
+                                    class="glyphicon glyphicon-user"></span>
+                </span>
+                            <input class="form-control" id="username" type="text" placeholder="Enter your username"
+                                   data-ng-model="vm.username"
+                                   required autofocus>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="input-group">
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-lock"></span>
+                </span>
+                            <input class="form-control" id="password" type="password" placeholder="Enter your password"
+                                   data-ng-model="vm.password"
+                                   required>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-success" data-ng-click="vm.login()"
+                            data-ng-disabled="loginForm.$invalid">
+                        Login
+                    </button>
+                    <button class="btn btn-info pull-right" data-ng-click="vm.createNewUser()">Create a new user
+                    </button>
+                </form>
+            </div>
         </div>
-        <div class="form-group">
-            <label for="password">Password:</label>
-            <input class="form-control" id="password" type="password" placeholder="Enter your password" data-ng-model="vm.password"
-                   required>
-        </div>
-        <button type="submit" class="btn btn-default" data-ng-click="vm.login()" data-ng-disabled="loginForm.$invalid">Login</button>
-        <button class="btn btn-default pull-right" data-ng-click="vm.createNewUser()">Create a new user</button>
-    </form>
+    </div>
 </div>

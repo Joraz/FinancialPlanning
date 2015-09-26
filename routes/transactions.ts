@@ -15,15 +15,17 @@ import UserDal = require("../database/UserDal");
 
 var router: express.Router = express.Router();
 
-// GET transactions for user
+/**
+ * GET outgoing transactions for user
+ */
 router.get('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
-    var db = httpRequest.database;
-    var user = httpRequest.user;
-    var transactionDal = new TransactionDal(db);
-    var userDal = new UserDal(db);
-    var startDate = httpRequest.query.startDate;
-    var endDate = httpRequest.query.endDate;
+    let db = httpRequest.database;
+    let user = httpRequest.user;
+    let transactionDal = new TransactionDal(db);
+    let userDal = new UserDal(db);
+    let startDate = httpRequest.query.startDate;
+    let endDate = httpRequest.query.endDate;
 
     transactionDal.getTransactionsForUser(user._id)
         .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
@@ -39,7 +41,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (httpRequest: ex
             userDal.updateBalance(user._id, balance)
                 .then(() =>
                 {
-                    var promises = [];
+                    let promises = [];
                     upToDateTransactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
                     {
                         promises.push(transactionDal.updateTransaction(transaction._id, transaction));
@@ -48,7 +50,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (httpRequest: ex
                     Promise.all(promises)
                         .then((savedTransactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
                         {
-                            var filtered = TransactionUtilities.filterTransactionsByDate(savedTransactions, startDate, endDate);
+                            let filtered = TransactionUtilities.filterTransactionsByDate(savedTransactions, startDate, endDate);
                             return httpResponse.status(HttpCodes.ok).send(filtered);
                         });
                 });
@@ -59,7 +61,95 @@ router.get('/', passport.authenticate('jwt', {session: false}), (httpRequest: ex
         });
 });
 
-// GET transaction summaries for user
+/**
+ *
+ */
+router.get('/incoming/totals', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let userId = httpRequest.user._id;
+    let db = httpRequest.database;
+    let transactionDal = new TransactionDal(db);
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            let filtered = TransactionUtilities.removeOutgoingTransactions(transactions);
+            let totals = TransactionUtilities.totalTransactionsByMonth(filtered);
+            return httpResponse.status(HttpCodes.ok).send(totals);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ *
+ */
+router.get('/outgoing/totals', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let userId = httpRequest.user._id;
+    let db = httpRequest.database;
+    let transactionDal = new TransactionDal(db);
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            let filtered = TransactionUtilities.removeIncomingTransactions(transactions);
+            let totals = TransactionUtilities.totalTransactionsByMonth(filtered);
+            return httpResponse.status(HttpCodes.ok).send(totals);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * GET recurring transactions for user
+ */
+router.get('/recurring', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let db = httpRequest.database;
+    let user = httpRequest.user;
+    let transactionDal = new TransactionDal(db);
+    let userDal = new UserDal(db);
+
+    transactionDal.getTransactionsForUser(user._id)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            let upToDateTransactions = transactions.map((transaction: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+            {
+                return TransactionUtilities.bringRecurringTransactionUpToDate(<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>transaction);
+            });
+
+            var balance = user.balance;
+            balance = TransactionUtilities.applyTransactionsToBalance(upToDateTransactions, balance);
+
+            userDal.updateBalance(user._id, balance)
+                .then(() =>
+                {
+                    let promises = [];
+                    upToDateTransactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+                    {
+                        promises.push(transactionDal.updateTransaction(transaction._id, transaction));
+                    });
+
+                    Promise.all(promises)
+                        .then((savedTransactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+                        {
+                            let filtered = savedTransactions.filter(x => x.hasOwnProperty('isActive'));
+                            return httpResponse.status(HttpCodes.ok).send(filtered);
+                        });
+                });
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * GET transaction summaries for user
+ */
 router.get('/summaries', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var db = httpRequest.database;
@@ -93,11 +183,12 @@ router.get('/summaries', passport.authenticate('jwt', {session: false}), (httpRe
                         .then((savedTransactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
                         {
                             let filtered = TransactionUtilities.filterTransactionsByDate(savedTransactions, startDate, endDate);
+                            filtered = TransactionUtilities.removeIncomingTransactions(filtered);
                             let summaryPromises: Array<Promise<Array<FinancialPlanning.Common.Transactions.ITransactionSummary>>> = [];
                             filtered.forEach((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
                             {
                                 var transactionTypeDal = new TransactionTypeDal(db);
-                                summaryPromises.push(TransactionUtilities.createTransactionSummaries(transactionInstance, transactionTypeDal));
+                                summaryPromises.push(TransactionUtilities.createTransactionSummaries(transactionInstance, transactionTypeDal, user._id));
                             });
 
                             Promise.all(summaryPromises)
@@ -122,7 +213,9 @@ router.get('/summaries', passport.authenticate('jwt', {session: false}), (httpRe
         })
 });
 
-// CREATE new transaction instance
+/**
+ * CREATE new transaction instance
+ */
 router.post('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var userId: string = httpRequest.user._id;
@@ -176,7 +269,9 @@ router.post('/', passport.authenticate('jwt', {session: false}), (httpRequest: e
         });
 });
 
-// CREATE new recurring transaction instance
+/**
+ * CREATE new recurring transaction instance
+ */
 router.post('/recurring', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var userId: string = httpRequest.user._id;
@@ -229,7 +324,9 @@ router.post('/recurring', passport.authenticate('jwt', {session: false}), (httpR
         });
 });
 
-// CREATE new transaction type
+/**
+ * CREATE new transaction type
+ */
 router.post('/type', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var database = httpRequest.database;
@@ -274,7 +371,9 @@ router.post('/type', passport.authenticate('jwt', {session: false}), (httpReques
         });
 });
 
-// UPDATE existing transaction type
+/**
+ * UPDATE existing transaction type
+ */
 router.put('/type', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var database = httpRequest.database;
@@ -301,7 +400,9 @@ router.put('/type', passport.authenticate('jwt', {session: false}), (httpRequest
         });
 });
 
-// GET all transaction types for user
+/**
+ * GET all transaction types for user
+ */
 router.get('/types', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var database = httpRequest.database;
@@ -319,11 +420,13 @@ router.get('/types', passport.authenticate('jwt', {session: false}), (httpReques
         });
 });
 
-// CANCEL recurring transaction
+/**
+ * CANCEL recurring transaction
+ */
 router.post('/recurring/cancel', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
     var database = httpRequest.database;
-    var transactionId = httpRequest.params.transactionId;
+    var transactionId = httpRequest.body.transactionId;
 
     if (!transactionId)
     {
@@ -338,6 +441,7 @@ router.post('/recurring/cancel', passport.authenticate('jwt', {session: false}),
         })
         .catch((error: any) =>
         {
+            console.log(error);
             httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
         });
 });

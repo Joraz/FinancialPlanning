@@ -1,63 +1,73 @@
 <div class="col-md-12" style="padding-top: 20px">
-    <!--<div class="row col-md-6">-->
-    <!--<div class="row">-->
-    <!--<div class="col-md-6">-->
-    <!--<p class="input-group">-->
-    <!--<input type="text" class="form-control" datepicker-popup="{{format}}" ng-model="dt"-->
-    <!--is-open="status.opened" min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"-->
-    <!--date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
-    <!--<span class="input-group-btn">-->
-    <!--<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
-    <!--</span>-->
-    <!--</p>-->
-    <!--</div>-->
+    <div class="row panel panel-default">
+        <div class="panel-body">
+            <div class="col-md-4">
+                <div class="col-md-8 col-md-offset-2">
+                    <h5>Transactions from:</h5>
 
-    <!--<div class="col-md-6">-->
-    <!--<p class="input-group">-->
-    <!--<input type="date" class="form-control" datepicker-popup ng-model="dt" is-open="status.opened"-->
-    <!--min-date="minDate" max-date="maxDate" datepicker-options="dateOptions"-->
-    <!--date-disabled="disabled(date, mode)" ng-required="true" close-text="Close" />-->
-    <!--<span class="input-group-btn">-->
-    <!--<button type="button" class="btn btn-default" ng-click="open($event)"><i class="glyphicon glyphicon-calendar"></i></button>-->
-    <!--</span>-->
-    <!--</p>-->
-    <!--</div>-->
-    <!--</div>-->
+                    <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy"
+                               data-ng-model="vm.transactionsFrom"
+                               is-open="vm.fromDatepickerStatus.opened" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        data-ng-click="vm.fromDatepickerStatus.opened = !vm.fromDatepickerStatus.opened">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+                    </p>
+                    <h5>Transactions to:</h5>
 
-    <!--<div class="col-md-6">-->
-    <!--<p class="input-group">-->
-    <!--<input type="text" class="form-control" ng-model="vm.transactionsFrom"-->
-    <!--is-open="status.opened" datepicker-options="{formatYear: 'yy'}" close-text="Close"/>-->
-    <!--<span class="input-group-btn">-->
-    <!--<button type="button" class="btn btn-default" ng-click="status.opened = true"><i-->
-    <!--class="glyphicon glyphicon-calendar"></i></button>-->
-    <!--</span>-->
-    <!--</p>-->
-    <!--</div>-->
-    <!--<canvas id="line" class="chart chart-line" chart-data="vm.balances" chart-labels="vm.dates"></canvas>-->
-    <!--</div>-->
-    <div class="row">
-        <div class="col-md-4">
-            <h4>Transactions by Name</h4>
-            <canvas id="doughnutNames" class="chart chart-doughnut" chart-data="vm.donutChartData.nameAdjustments"
-                    chart-labels="vm.donutChartData.nameNames" chart-options="vm.donutChartSettings"></canvas>
+                    <p class="input-group">
+                        <input type="text" class="form-control" datepicker-popup="dd-MMMM-yyyy"
+                               data-ng-model="vm.transactionsTo"
+                               is-open="vm.toDatepickerStatus.opened" close-text="Close"/>
+            <span class="input-group-btn">
+                <button type="button" class="btn btn-default"
+                        data-ng-click="vm.toDatepickerStatus.opened = !vm.toDatepickerStatus.opened">
+                    <i class="glyphicon glyphicon-calendar"></i>
+                </button>
+            </span>
+                    </p>
+                    <p data-ng-if="vm.showValidationError">From date cannot be before to date</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-body">
+                    <h4 class="text-center">Transactions by name</h4>
+                    <canvas id="doughnutNames" class="chart chart-doughnut"
+                            chart-data="vm.donutChartData.nameAdjustments"
+                            chart-labels="vm.donutChartData.nameNames" chart-options="vm.donutChartSettings"></canvas>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="panel panel-body">
+                    <h4 class="text-center">Transactions by classification</h4>
+                    <canvas id="doughnutClassifications" class="chart chart-doughnut"
+                            chart-data="vm.donutChartData.classificationAdjustments"
+                            chart-labels="vm.donutChartData.classificationNames"
+                            chart-options="vm.donutChartSettings"></canvas>
+                </div>
+            </div>
         </div>
     </div>
     <div class="row">
         <div class="col-md-4">
-            <h4>Transactions by Classification</h4>
-            <canvas id="doughnutClassifications" class="chart chart-doughnut col-md-6"
-                    chart-data="vm.donutChartData.classificationAdjustments"
-                    chart-labels="vm.donutChartData.classificationNames" chart-options="vm.donutChartSettings"></canvas>
+            <h4 class="text-center">Balance history</h4>
+            <canvas id="line" class="chart chart-line" chart-data="vm.balances" chart-labels="vm.dates"
+                    chart-options="vm.lineChartSettings"></canvas>
+        </div>
+        <div class="col-md-4">
+            <h4 class="text-center">Balance forecast</h4>
+            <canvas id="forecast" class="chart chart-line" chart-data="vm.forecastBalances"
+                    chart-labels="vm.forecastDates"
+                    chart-options="vm.lineChartSettings"></canvas>
+        </div>
+        <h4 class="text-center">Income vs expenditure for the past year</h4>
+
+        <div class="col-md-4">
+            <canvas id="bar" class="chart chart-bar" chart-data="vm.inOutTotals" chart-labels="vm.inOutDates"
+                    chart-options="vm.donutChartSettings" chart-legend="true" chart-series="vm.inOutSeries"></canvas>
         </div>
     </div>
-    <!--<div class="row">-->
-        <!--<div class="col-md-4">-->
-            <!--<h4>Transactions by Sub-Classification</h4>-->
-            <!--<canvas id="doughnutSubClassifications" class="chart chart-doughnut col-md-6"-->
-                    <!--chart-data="vm.donutChartData.subClassificationAdjustments"-->
-                    <!--chart-labels="vm.donutChartData.subClassificationNames"-->
-                    <!--chart-options="vm.donutChartSettings"></canvas>-->
-        <!--</div>-->
-    <!--</div>-->
 </div>

@@ -15,6 +15,12 @@ module FinancialPlanning
         {
         }
 
+        /**
+         *
+         * @param username
+         * @param password
+         * @returns {IPromise<T>}
+         */
         public login(username: string, password: string): ng.IPromise<any>
         {
             var deferred = this.$q.defer();
@@ -35,11 +41,19 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        /**
+         *
+         * @returns {string}
+         */
         public getJWT(): any
         {
             return "JWT " + this.jwt;
         }
 
+        /**
+         *
+         * @returns {IPromise<T>}
+         */
         public checkLoginStatus(): ng.IPromise<boolean>
         {
             var deferred = this.$q.defer();
@@ -60,7 +74,7 @@ module FinancialPlanning
                 })
                 .catch((error: any) =>
                 {
-                    if (error && error.status && error.status ===  401)
+                    if (error && error.status && error.status === 401)
                     {
                         return deferred.resolve(false);
                     }
@@ -71,6 +85,10 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        /**
+         *
+         * @returns {IPromise<T>}
+         */
         public getUserSummary(): ng.IPromise<FinancialPlanning.Common.Users.IUserSummary>
         {
             var deferred = this.$q.defer();
@@ -91,6 +109,15 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        /**
+         *
+         * @param username
+         * @param password
+         * @param balance
+         * @param preferredName
+         * @param lowLimitWarning
+         * @returns {IPromise<T>}
+         */
         public createUser(username: string, password: string, balance?: number, preferredName?: string, lowLimitWarning?: number): ng.IPromise<any>
         {
             var deferred = this.$q.defer();
@@ -126,6 +153,13 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        /**
+         *
+         * @param preferredName
+         * @param lowLimitWarning
+         * @param password
+         * @returns {IPromise<T>}
+         */
         public updateUser(preferredName?: string, lowLimitWarning?: number, password?: string): ng.IPromise<any>
         {
             var deferred = this.$q.defer();
@@ -163,6 +197,10 @@ module FinancialPlanning
             return deferred.promise;
         }
 
+        /**
+         *
+         * @returns {IPromise<T>}
+         */
         public getUserDetails(): ng.IPromise<FinancialPlanning.Common.Users.IUserDetails>
         {
             var deferred = this.$q.defer();
@@ -176,6 +214,78 @@ module FinancialPlanning
             this.$http.get("http://localhost:3000/users/details", requestConfig)
                 .then((response: ng.IHttpPromiseCallbackArg<FinancialPlanning.Common.Users.IUserDetails>) =>
                 {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        /**
+         *
+         * @param startDate
+         * @param endDate
+         */
+        public getBalanceSummary(startDate: Date, endDate: Date): ng.IPromise<Array<FinancialPlanning.Common.Users.IBalanceSummary>>
+        {
+            var deferred = this.$q.defer();
+
+            var params: any = {
+                startDate: startDate,
+                endDate: endDate
+            };
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                params: params,
+                headers: {
+                    Authorization: this.getJWT()
+                }
+            };
+
+            this.$http.get("http://localhost:3000/users/summary/balance", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<FinancialPlanning.Common.Users.IBalanceSummary>) =>
+                {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        public getBalanceForecast(): ng.IPromise<Array<FinancialPlanning.Common.Users.IBalanceSummary>>
+        {
+            var deferred = this.$q.defer();
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                headers: {
+                    Authorization: this.getJWT()
+                }
+            };
+
+            this.$http.get("http://localhost:3000/users/forecast", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<FinancialPlanning.Common.Users.IBalanceSummary>) =>
+                {
+                    deferred.resolve(response.data);
+                })
+                .catch(deferred.reject);
+
+            return deferred.promise;
+        }
+
+        public deleteUser(): ng.IPromise<any>
+        {
+            var deferred = this.$q.defer();
+
+            var requestConfig: ng.IRequestShortcutConfig = {
+                headers: {
+                    Authorization: this.getJWT()
+                }
+            };
+
+            this.$http.delete("http://localhost:3000/users/", requestConfig)
+                .then((response: ng.IHttpPromiseCallbackArg<any>) =>
+                {
+                    this.jwt = null;
                     deferred.resolve(response.data);
                 })
                 .catch(deferred.reject);

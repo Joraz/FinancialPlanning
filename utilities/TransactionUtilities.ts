@@ -60,8 +60,6 @@ class TransactionUtilities
      */
     public static filterTransactionTypesByUser(transactionTypes: Array<FinancialPlanning.Common.Transactions.ITransactionType>, userId?: string): Array<FinancialPlanning.Common.Transactions.ITransactionType>
     {
-        //console.info("filterTransactionTypesByUser");
-        //console.log(JSON.stringify(transactionTypes, null, 2));
         if (!ObjectUtilities.isDefined(transactionTypes))
         {
             throw new Error("No 'transactionTypes' parameter provided in TransactionUtilities::filterTransactionTypesByUser().");
@@ -182,9 +180,10 @@ class TransactionUtilities
     /**
      *
      * @param transactionInstance
+     * @param end
      * @returns {FinancialPlanning.Common.Transactions.IRecurringTransactionInstance}
      */
-    public static bringRecurringTransactionUpToDate(transactionInstance: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance): FinancialPlanning.Common.Transactions.IRecurringTransactionInstance
+    public static bringRecurringTransactionUpToDate(transactionInstance: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance, end?: Date): FinancialPlanning.Common.Transactions.IRecurringTransactionInstance
     {
         if (!ObjectUtilities.isDefined(transactionInstance))
         {
@@ -224,8 +223,8 @@ class TransactionUtilities
             return transactionInstance;
         }
 
-        let startMoment = moment(transaction.transactionDate).add(1, "month");
-        let endMoment = moment();
+        let startMoment = moment(transaction.transactionDate).add(1, "months");
+        let endMoment = end ? moment(end) : moment();
         let range = moment.range(startMoment, endMoment);
 
         range.by("months", (moment) =>
@@ -248,13 +247,13 @@ class TransactionUtilities
      * @param transactionTypeDal
      * @returns {Promise}
      */
-    public static createTransactionSummaries(transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance, transactionTypeDal: FinancialPlanning.Server.Database.ITransactionTypeDal): Promise<Array<FinancialPlanning.Common.Transactions.ITransactionSummary>>
+    public static createTransactionSummaries(transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance, transactionTypeDal: FinancialPlanning.Server.Database.ITransactionTypeDal, userId?: string): Promise<Array<FinancialPlanning.Common.Transactions.ITransactionSummary>>
     {
         return new Promise((resolve, reject) =>
         {
             let summaries: Array<FinancialPlanning.Common.Transactions.ITransactionSummary> = [];
 
-            transactionTypeDal.getTransactionType(transactionInstance.transactionTypeId)
+            transactionTypeDal.getTransactionType(transactionInstance.transactionTypeId, userId)
                 .then((transactionType: FinancialPlanning.Common.Transactions.ITransactionType) =>
                 {
                     transactionInstance.transactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransaction) =>
@@ -275,6 +274,156 @@ class TransactionUtilities
                 })
                 .catch(reject);
         });
+    }
+
+    public static createBalanceSummary(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>, startDate: Date, endDate: Date, currentBalance: number): Array<FinancialPlanning.Common.Users.IBalanceSummary>
+    {
+        let dates = [];
+        let dateSummaries: Array<FinancialPlanning.Common.Users.IBalanceSummary> = [];
+        let balance = currentBalance;
+        let startMoment = moment(startDate);
+        let endMoment = moment(endDate);
+        let range = moment.range(startMoment, endMoment);
+        let adjustments = TransactionUtilities.createAdjustmentSummary(transactions);
+
+        range.by("days", (moment) =>
+        {
+            dates.push(moment.toDate());
+        });
+
+        let newBalance: number = balance;
+
+        while (dates.length > 0)
+        {
+            let date = dates.pop();
+            let match: Array<FinancialPlanning.Server.Transactions.IAdjustmentSummary> = _.where(adjustments, {date: moment(date).format("YYYY-MM-DD")});
+            if (match)
+            {
+                match.forEach((adjustment: FinancialPlanning.Server.Transactions.IAdjustmentSummary) =>
+                {
+                    var adj = adjustment.adjustment.toFixed(2);
+                    newBalance -= parseFloat(adj);
+                });
+            }
+
+            dateSummaries.push({
+                date: date,
+                balance: newBalance
+            });
+        }
+
+        return dateSummaries.reverse();
+    }
+
+    /**
+     *
+     * @param transactions
+     */
+    public static createAdjustmentSummary(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Server.Transactions.IAdjustmentSummary>
+    {
+        let summaries: Array<FinancialPlanning.Server.Transactions.IAdjustmentSummary> = [];
+
+        transactions.forEach((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+        {
+            transactionInstance.transactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransaction) =>
+            {
+                summaries.push({
+                    date: moment(transaction.transactionDate).format("YYYY-MM-DD"),
+                    adjustment: transactionInstance.adjustment
+                });
+            });
+        });
+
+        return summaries;
+    }
+
+    public static removeIncomingTransactions(transactionInstances: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.ITransactionInstance>
+    {
+        return transactionInstances.filter((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+        {
+            return Math.abs(transactionInstance.adjustment) !== transactionInstance.adjustment;
+        });
+    }
+
+    public static removeOutgoingTransactions(transactionInstances: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.ITransactionInstance>
+    {
+        return transactionInstances.filter((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+        {
+            return Math.abs(transactionInstance.adjustment) === transactionInstance.adjustment;
+        });
+    }
+
+    public static createBalanceForecast(recurringTransactions: Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>,
+                                        balance: number): Array<FinancialPlanning.Common.Users.IBalanceSummary>
+    {
+        let summaries: Array<FinancialPlanning.Common.Users.IBalanceSummary> = [];
+        let futureTransactionInstances = recurringTransactions
+            .map(x => TransactionUtilities.bringRecurringTransactionUpToDate(x, moment().add(3, "months").toDate()));
+        let futureTransactions: Array<FinancialPlanning.Server.Transactions.IAdjustmentSummary> = [];
+        futureTransactionInstances.forEach((transactionInstance: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance) =>
+        {
+            transactionInstance.transactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransaction) =>
+            {
+                if (!transaction.processed)
+                {
+                    futureTransactions.push({
+                        date: moment(transaction.transactionDate).format("YYYY-MM-DD"),
+                        adjustment: transactionInstance.adjustment
+                    });
+                }
+            });
+        });
+        let start = moment();
+        let end = moment().add(3, "months");
+        var previousMoment = moment();
+        let range = moment.range(start, end);
+        range.by("weeks", (cMoment) =>
+        {
+            futureTransactions.forEach((fTransaction: FinancialPlanning.Server.Transactions.IAdjustmentSummary) =>
+            {
+                let transactionMoment = moment(new Date(fTransaction.date));
+                if (transactionMoment.isBetween(previousMoment, cMoment))
+                {
+                    balance += fTransaction.adjustment;
+                }
+            });
+            summaries.push({
+                date: cMoment.toDate(),
+                balance: balance
+            });
+            previousMoment = cMoment;
+        });
+
+        return summaries;
+    }
+
+    public static totalTransactionsByMonth(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.IMonthTotal>
+    {
+        let totals: Array<FinancialPlanning.Common.Transactions.IMonthTotal> = [];
+        let now = moment().add(1, "months");
+        let then = moment().add(1, "months").subtract(1, "years");
+        let range = moment.range(then, now);
+        range.by("months", (cMoment) =>
+        {
+            // create a range for the whole month
+            let monthStart = cMoment.clone().startOf("month");
+            let monthEnd = cMoment.clone().endOf("month");
+            let transactionsForMonth: Array<number> = [];
+            transactions.forEach((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
+            {
+                transactionInstance.transactions.forEach((transaction: FinancialPlanning.Common.Transactions.ITransaction) =>
+                {
+                    if (moment(transaction.transactionDate).isBetween(monthStart, monthEnd))
+                    {
+                        transactionsForMonth.push(Math.abs(transactionInstance.adjustment));
+                    }
+                });
+            });
+            let total = 0;
+            transactionsForMonth.forEach(x => total += x);
+            totals.push({month: cMoment.format("MMM"), total: total});
+        }, true);
+        return totals;
     }
 }
 

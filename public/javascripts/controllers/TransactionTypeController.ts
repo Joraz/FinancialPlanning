@@ -6,6 +6,7 @@ module FinancialPlanning
     {
         public transactionTypes: Array<FinancialPlanning.Common.Transactions.ITransactionType>;
         public selectedTransaction: FinancialPlanning.Common.Transactions.ITransactionType;
+        public transactionTypeEdit: ng.IFormController;
 
         public isNewTransactionType: boolean = false;
 
@@ -71,6 +72,8 @@ module FinancialPlanning
                         title: "Success!",
                         msg: "Transaction Type " + response.name + " saved"
                     });
+
+                    this.transactionTypeEdit.$setPristine();
 
                     if (this.isNewTransactionType)
                     {

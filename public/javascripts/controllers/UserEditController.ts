@@ -8,9 +8,9 @@ module FinancialPlanning
         public lowLimitWarning: number;
         public password: string;
 
-        public static $inject = ['$scope', 'userData', 'loginService', 'toasty'];
+        public static $inject = ['$scope', '$modal', 'userData', 'loginService', 'toasty'];
 
-        constructor(public $scope: IUserEditControllerScope, userData: FinancialPlanning.Common.Users.IUserDetails,
+        constructor(public $scope: IUserEditControllerScope, public $modal: ng.ui.bootstrap.IModalService, userData: FinancialPlanning.Common.Users.IUserDetails,
                     public loginService: ILoginService, public toasty: toasty.IToastyService)
         {
             $scope.vm = this;
@@ -38,6 +38,15 @@ module FinancialPlanning
                         msg: error.data
                     });
                 });
+        }
+
+        public deleteUser(): void
+        {
+            this.$modal.open({
+                animation: true,
+                templateUrl: "templates/confirm-modal.html",
+                controller: "modalController"
+            });
         }
     }
 }

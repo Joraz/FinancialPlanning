@@ -24,3 +24,4 @@
 /// <reference path="angular-toasty/angular-toasty.d.ts" />
 /// <reference path="moment-range/moment-range.d.ts" />
 /// <reference path="chartjs/chart.d.ts" />
+/// <reference path="angular-ui-bootstrap/angular-ui-bootstrap.d.ts" />
