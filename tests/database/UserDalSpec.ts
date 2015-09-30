@@ -275,10 +275,10 @@ describe("UserDal", () =>
                 it("should delete that user", () =>
                 {
                     return userDal.deleteUser("test-user-6")
-                        .then((response: string) =>
+                        .then((response: boolean) =>
                         {
                             chai.expect(response).to.not.be.undefined;
-                            chai.expect(response).to.equal("Success");
+                            chai.expect(response).to.be.true;
                         })
                         .catch((error: any) =>
                         {

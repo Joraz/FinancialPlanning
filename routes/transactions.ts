@@ -15,6 +15,8 @@ import UserDal = require("../database/UserDal");
 
 var router: express.Router = express.Router();
 
+// Contains route definitons for transactions and transaction types
+
 /**
  * GET outgoing transactions for user
  */
@@ -62,7 +64,7 @@ router.get('/', passport.authenticate('jwt', {session: false}), (httpRequest: ex
 });
 
 /**
- *
+ * GET totals for incoming transactions for user
  */
 router.get('/incoming/totals', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -83,7 +85,7 @@ router.get('/incoming/totals', passport.authenticate('jwt', {session: false}), (
 });
 
 /**
- *
+ * GET totals for outgoing transactions for user
  */
 router.get('/outgoing/totals', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -214,7 +216,27 @@ router.get('/summaries', passport.authenticate('jwt', {session: false}), (httpRe
 });
 
 /**
- * CREATE new transaction instance
+ * GET all transaction types for user
+ */
+router.get('/types', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var database = httpRequest.database;
+    var transactionTypeDal = new TransactionTypeDal(database);
+    var userId = httpRequest.user._id;
+
+    transactionTypeDal.getAllTransactionTypesByUserId(userId)
+        .then((response: Array<FinancialPlanning.Common.Transactions.ITransactionType>) =>
+        {
+            return httpResponse.status(HttpCodes.ok).send(response);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * POST new transaction
  */
 router.post('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -270,7 +292,7 @@ router.post('/', passport.authenticate('jwt', {session: false}), (httpRequest: e
 });
 
 /**
- * CREATE new recurring transaction instance
+ * POST new recurring transaction
  */
 router.post('/recurring', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -325,7 +347,7 @@ router.post('/recurring', passport.authenticate('jwt', {session: false}), (httpR
 });
 
 /**
- * CREATE new transaction type
+ * POST new transaction type
  */
 router.post('/type', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -372,7 +394,33 @@ router.post('/type', passport.authenticate('jwt', {session: false}), (httpReques
 });
 
 /**
- * UPDATE existing transaction type
+ * POST recurring transaction cancellation request
+ */
+router.post('/recurring/cancel', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var database = httpRequest.database;
+    var transactionId = httpRequest.body.transactionId;
+
+    if (!transactionId)
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No transaction ID specified in request");
+    }
+
+    var transactionDal = new TransactionDal(database);
+    transactionDal.toggleRecurringTransactionInstanceStatus(transactionId)
+        .then((response: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance) =>
+        {
+            httpResponse.status(HttpCodes.ok).send(response);
+        })
+        .catch((error: any) =>
+        {
+            console.log(error);
+            httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * PUT existing transaction type
  */
 router.put('/type', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -397,52 +445,6 @@ router.put('/type', passport.authenticate('jwt', {session: false}), (httpRequest
         .catch((error: any) =>
         {
             return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
-        });
-});
-
-/**
- * GET all transaction types for user
- */
-router.get('/types', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var database = httpRequest.database;
-    var transactionTypeDal = new TransactionTypeDal(database);
-    var userId = httpRequest.user._id;
-
-    transactionTypeDal.getAllTransactionTypesByUserId(userId)
-        .then((response: Array<FinancialPlanning.Common.Transactions.ITransactionType>) =>
-        {
-            return httpResponse.status(HttpCodes.ok).send(response);
-        })
-        .catch((error: any) =>
-        {
-            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
-        });
-});
-
-/**
- * CANCEL recurring transaction
- */
-router.post('/recurring/cancel', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var database = httpRequest.database;
-    var transactionId = httpRequest.body.transactionId;
-
-    if (!transactionId)
-    {
-        return httpResponse.status(HttpCodes.badRequest).send("No transaction ID specified in request");
-    }
-
-    var transactionDal = new TransactionDal(database);
-    transactionDal.toggleRecurringTransactionInstanceStatus(transactionId)
-        .then((response: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance) =>
-        {
-            httpResponse.status(HttpCodes.ok).send(response);
-        })
-        .catch((error: any) =>
-        {
-            console.log(error);
-            httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
         });
 });
 

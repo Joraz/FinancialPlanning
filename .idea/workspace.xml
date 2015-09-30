@@ -2,43 +2,74 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="78c0a7ef-3e39-4623-809e-1400acbc6fa5" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/public/templates/confirm-modal.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/HomeController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/HomeController.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/services/interfaces/ILoginService.ts" afterPath="$PROJECT_DIR$/public/javascripts/services/interfaces/ILoginService.ts" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\bin\www" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\defaultTransactionTypes.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\.bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\CONTRIBUTING.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\README.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\dist\angular-toasty.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\dist\angular-toasty.min.css" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-toasty\package.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\.bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\CHANGELOG.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\CONTRIBUTING.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\LICENSE" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\README.md" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\angular-ui-router\bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\jquery\.bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\jquery\MIT-LICENSE.txt" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\jquery\bower.json" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\jquery\dist\jquery.min.map" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\public\bower_components\jquery\src\sizzle\dist\sizzle.min.map" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\tests\database\TransactionDalSpec.ts" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\tests\database\TransactionTypeDalSpec.ts" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\typings\angular-ui-router\angular-ui-router.d.ts" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\typings\angularjs\angular.d.ts" afterPath="" />
+      <change type="DELETED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\typings\jquery\jquery.d.ts" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\database\baseDal.ts" afterPath="$PROJECT_DIR$/database/BaseDal.ts" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\database\database.ts" afterPath="$PROJECT_DIR$/database/Database.ts" />
+      <change type="MOVED" beforePath="C:\Users\Daniel\WebstormProjects\FinancialPlanning\database\userDal.ts" afterPath="$PROJECT_DIR$/database/UserDal.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/CollectionUtilities.ts" afterPath="$PROJECT_DIR$/utilities/CollectionUtilities.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/DateUtilities.ts" afterPath="$PROJECT_DIR$/utilities/DateUtilities.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/factories/HashFactory.ts" afterPath="$PROJECT_DIR$/factories/HashFactory.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/enums/HttpCodes.ts" afterPath="$PROJECT_DIR$/enums/HttpCodes.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IChartController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IChartController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/IChartControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/IChartControllerScope.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IHomeController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IHomeController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/IHomeControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/IHomeControllerScope.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ILoginController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ILoginController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/ILoginControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/ILoginControllerScope.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/services/interfaces/ITransactionService.ts" afterPath="$PROJECT_DIR$/public/javascripts/services/interfaces/ITransactionService.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionTypeController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionTypeController.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/services/LoginService.ts" afterPath="$PROJECT_DIR$/public/javascripts/services/LoginService.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserControllerScope.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserEditController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserEditController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserEditControllerScope.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserEditControllerScope.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/ObjectUtilities.ts" afterPath="$PROJECT_DIR$/utilities/ObjectUtilities.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/factories/TokenFactory.ts" afterPath="$PROJECT_DIR$/factories/TokenFactory.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/TransactionDal.ts" afterPath="$PROJECT_DIR$/database/TransactionDal.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/services/TransactionService.ts" afterPath="$PROJECT_DIR$/public/javascripts/services/TransactionService.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/factories/TransactionFactory.ts" afterPath="$PROJECT_DIR$/factories/TransactionFactory.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/database/TransactionTypeDal.ts" afterPath="$PROJECT_DIR$/database/TransactionTypeDal.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/TransactionUtilities.ts" afterPath="$PROJECT_DIR$/utilities/TransactionUtilities.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/UserController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/UserController.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/controllers/UserEditController.ts" afterPath="$PROJECT_DIR$/public/javascripts/controllers/UserEditController.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tests/database/UserDalSpec.ts" afterPath="$PROJECT_DIR$/tests/database/UserDalSpec.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/factories/UserFactory.ts" afterPath="$PROJECT_DIR$/factories/UserFactory.ts" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utilities/UuidUtilities.ts" afterPath="$PROJECT_DIR$/utilities/UuidUtilities.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js.map" afterPath="$PROJECT_DIR$/app.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/app.js.map" afterPath="$PROJECT_DIR$/public/javascripts/app.js.map" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.js" afterPath="$PROJECT_DIR$/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/app.js" afterPath="$PROJECT_DIR$/public/javascripts/app.js" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app.ts" afterPath="$PROJECT_DIR$/app.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/javascripts/app.ts" afterPath="$PROJECT_DIR$/public/javascripts/app.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/charts.html" afterPath="$PROJECT_DIR$/public/templates/charts.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/edit-user.html" afterPath="$PROJECT_DIR$/public/templates/edit-user.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/typings/financial-planning/financial-planning.d.ts" afterPath="$PROJECT_DIR$/typings/financial-planning/financial-planning.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/home.html" afterPath="$PROJECT_DIR$/public/templates/home.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/index.html" afterPath="$PROJECT_DIR$/public/index.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/login.html" afterPath="$PROJECT_DIR$/public/templates/login.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/new-user.html" afterPath="$PROJECT_DIR$/public/templates/new-user.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/package.json" afterPath="$PROJECT_DIR$/package.json" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/reference.ts" afterPath="$PROJECT_DIR$/reference.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/stylesheets/style.css" afterPath="$PROJECT_DIR$/public/stylesheets/style.css" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/transaction-types.html" afterPath="$PROJECT_DIR$/public/templates/transaction-types.html" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/public/templates/transactions.html" afterPath="$PROJECT_DIR$/public/templates/transactions.html" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/transactions.ts" afterPath="$PROJECT_DIR$/routes/transactions.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/typings/tsd.d.ts" afterPath="$PROJECT_DIR$/typings/tsd.d.ts" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/tsd.json" afterPath="$PROJECT_DIR$/tsd.json" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/routes/users.ts" afterPath="$PROJECT_DIR$/routes/users.ts" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -78,49 +109,7 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/database/UserDal.ts" />
-        <option value="$PROJECT_DIR$/utilities/UuidUtilities.ts" />
-        <option value="$PROJECT_DIR$/package.json" />
-        <option value="$PROJECT_DIR$/tsd.json" />
-        <option value="$PROJECT_DIR$/typings/tsd.d.ts" />
-        <option value="$PROJECT_DIR$/tests/database/TransactionDalSpec.ts" />
-        <option value="$PROJECT_DIR$/tests/factories/TransactionFactorySpec.ts" />
-        <option value="$PROJECT_DIR$/tests/database/TransactionTypeDalSpec.ts" />
-        <option value="$PROJECT_DIR$/factories/TransactionFactory.ts" />
-        <option value="$PROJECT_DIR$/tests/database/UserDalSpec.ts" />
-        <option value="$PROJECT_DIR$/tests/utilities/TransactionUtilitiesSpec.ts" />
-        <option value="$PROJECT_DIR$/typings/express/express.d.ts" />
-        <option value="$PROJECT_DIR$/defaultTransactionTypes.json" />
-        <option value="$PROJECT_DIR$/enums/HttpCodes.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserEditControllerScope.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/IUserEditController.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserEditController.ts" />
-        <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts" />
-        <option value="$PROJECT_DIR$/database/TransactionTypeDal.ts" />
-        <option value="$PROJECT_DIR$/utilities/TransactionUtilities.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/services/interfaces/ITransactionService.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/services/TransactionService.ts" />
-        <option value="$PROJECT_DIR$/routes/transactions.ts" />
-        <option value="$PROJECT_DIR$/database/Database.ts" />
-        <option value="$PROJECT_DIR$/reference.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/UserEditController.ts" />
-        <option value="$PROJECT_DIR$/public/templates/confirm-modal.html" />
-        <option value="$PROJECT_DIR$/public/javascripts/services/interfaces/ILoginService.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/services/LoginService.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/UserController.ts" />
-        <option value="$PROJECT_DIR$/database/TransactionDal.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/app.ts" />
-        <option value="$PROJECT_DIR$/typings/financial-planning/financial-planning.d.ts" />
-        <option value="$PROJECT_DIR$/routes/users.ts" />
         <option value="$PROJECT_DIR$/public/javascripts/controllers/HomeController.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts" />
-        <option value="$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts" />
-        <option value="$PROJECT_DIR$/app.ts" />
-        <option value="$PROJECT_DIR$/public/index.html" />
         <option value="$PROJECT_DIR$/public/templates/home.html" />
         <option value="$PROJECT_DIR$/public/stylesheets/style.css" />
         <option value="$PROJECT_DIR$/public/templates/new-user.html" />
@@ -129,6 +118,48 @@
         <option value="$PROJECT_DIR$/public/templates/login.html" />
         <option value="$PROJECT_DIR$/public/templates/transaction-types.html" />
         <option value="$PROJECT_DIR$/public/templates/edit-user.html" />
+        <option value="$PROJECT_DIR$/package.json" />
+        <option value="$PROJECT_DIR$/tests/database/TransactionDalSpec.ts" />
+        <option value="$PROJECT_DIR$/bin/www" />
+        <option value="$PROJECT_DIR$/enums/HttpCodes.ts" />
+        <option value="$PROJECT_DIR$/database/BaseDal.ts" />
+        <option value="$PROJECT_DIR$/database/Database.ts" />
+        <option value="$PROJECT_DIR$/database/TransactionDal.ts" />
+        <option value="$PROJECT_DIR$/database/TransactionTypeDal.ts" />
+        <option value="$PROJECT_DIR$/database/UserDal.ts" />
+        <option value="$PROJECT_DIR$/app.ts" />
+        <option value="$PROJECT_DIR$/factories/HashFactory.ts" />
+        <option value="$PROJECT_DIR$/factories/TokenFactory.ts" />
+        <option value="$PROJECT_DIR$/factories/TransactionFactory.ts" />
+        <option value="$PROJECT_DIR$/public/index.html" />
+        <option value="$PROJECT_DIR$/factories/UserFactory.ts" />
+        <option value="$PROJECT_DIR$/routes/transactions.ts" />
+        <option value="$PROJECT_DIR$/routes/users.ts" />
+        <option value="$PROJECT_DIR$/tests/database/UserDalSpec.ts" />
+        <option value="$PROJECT_DIR$/utilities/CollectionUtilities.ts" />
+        <option value="$PROJECT_DIR$/utilities/DateUtilities.ts" />
+        <option value="$PROJECT_DIR$/utilities/ObjectUtilities.ts" />
+        <option value="$PROJECT_DIR$/utilities/UuidUtilities.ts" />
+        <option value="$PROJECT_DIR$/utilities/TransactionUtilities.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IChartController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IHomeController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ILoginController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionTypeController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/UserController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserEditController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/IChartControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/IHomeControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/ILoginControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/scope/IUserEditControllerScope.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts" />
+        <option value="$PROJECT_DIR$/public/javascripts/app.ts" />
       </list>
     </option>
   </component>
@@ -211,6 +242,38 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialPlanning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialPlanning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialPlanning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="FinancialPlanning" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="public" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="javascripts" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
         </subPane>
       </pane>
       <pane id="Scratches" />
@@ -244,6 +307,7 @@
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder2" value="2" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeWidth3" value="973" />
     <property name="FileHistory.git4idea.history.GitHistoryProvider_treeOrder3" value="3" />
+    <property name="full.screen.before.presentation.mode" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -387,42 +451,42 @@
     <frame x="-8" y="-8" width="1936" height="1066" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24868283" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24868283" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32051283" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31944445" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.50421494" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.49578503" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.1431624" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2950" y="318" width="818" height="638" />
+      <window_info id="Version Control" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32478634" sideWeight="0.49578503" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32371795" sideWeight="0.49789253" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32264957" sideWeight="0.49789253" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3985043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834226" sideWeight="0.49683878" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34508547" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2950" y="318" width="818" height="638" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32513368" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3985043" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
     <layout-to-restore>
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32905984" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32051283" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="TypeScript Compiler" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31987578" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32834226" sideWeight="0.49683878" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3272727" sideWeight="0.50421494" order="10" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3262032" sideWeight="0.49578503" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.84294873" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2950" y="318" width="818" height="638" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32371795" sideWeight="0.49789253" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3258547" sideWeight="0.49578503" order="9" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34611398" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="2950" y="318" width="818" height="638" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32298136" sideWeight="0.49789253" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24868283" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32692307" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32608697" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
@@ -452,350 +516,178 @@
       <breakpoints>
         <line-breakpoint enabled="true" type="javascript">
           <url>file://$PROJECT_DIR$/routes/transactions.js</url>
-          <line>246</line>
+          <line>262</line>
           <option name="timeStamp" value="50" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="52" />
+      <option name="time" value="55" />
     </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/database/BaseDal.ts">
+    <entry file="file://$PROJECT_DIR$/database/UserDal.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.68770766">
-          <caret line="23" column="17" selection-start-line="23" selection-start-column="17" selection-end-line="23" selection-end-column="17" />
-          <folding />
+        <state vertical-scroll-proportion="0.24669604">
+          <caret line="208" column="36" selection-start-line="208" selection-start-column="36" selection-end-line="208" selection-end-column="36" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/IChartController.ts">
+    <entry file="file://$PROJECT_DIR$/app.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.07938258">
-          <caret line="4" column="21" selection-start-line="4" selection-start-column="21" selection-end-line="4" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.90088105">
+          <caret line="97" column="17" selection-start-line="97" selection-start-column="17" selection-end-line="97" selection-end-column="17" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/typings/moment/moment.d.ts">
+    <entry file="file://$PROJECT_DIR$/factories/HashFactory.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27753305">
+          <caret line="56" column="66" selection-start-line="56" selection-start-column="66" selection-end-line="56" selection-end-column="66" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/factories/TokenFactory.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.23788546">
+          <caret line="12" column="79" selection-start-line="12" selection-start-column="79" selection-end-line="12" selection-end-column="79" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tsd.json">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/typings/underscore/underscore.d.ts">
+    <entry file="file://$PROJECT_DIR$/public/bower.json">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33296582">
-          <caret line="55" column="14" selection-start-line="55" selection-start-column="14" selection-end-line="55" selection-end-column="14" />
-          <folding />
+        <state vertical-scroll-proportion="0.2247446">
+          <caret line="11" column="13" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/typings/moment/moment-node.d.ts">
+    <entry file="file://$PROJECT_DIR$/public/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.51157665">
-          <caret line="183" column="8" selection-start-line="183" selection-start-column="8" selection-end-line="183" selection-end-column="8" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/typings/moment-range/moment-range.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33281493">
-          <caret line="40" column="8" selection-start-line="40" selection-start-column="8" selection-end-line="40" selection-end-column="8" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/typings/chartjs/chart.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09911894">
-          <caret line="5" column="22" selection-start-line="5" selection-start-column="22" selection-end-line="5" selection-end-column="22" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="196" column="48" selection-start-line="196" selection-start-column="48" selection-end-line="196" selection-end-column="48" />
-          <folding />
+        <state vertical-scroll-proportion="0.8172531">
+          <caret line="40" column="39" selection-start-line="40" selection-start-column="39" selection-end-line="40" selection-end-column="39" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/factories/TransactionFactory.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-0.07929515">
-          <caret line="11" column="18" selection-start-line="11" selection-start-column="18" selection-end-line="11" selection-end-column="18" />
-          <folding />
+        <state vertical-scroll-proportion="0.50440526">
+          <caret line="139" column="9" selection-start-line="139" selection-start-column="9" selection-end-line="139" selection-end-column="9" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/routes/transactions.js">
+    <entry file="file://$PROJECT_DIR$/factories/UserFactory.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5719626">
-          <caret line="248" column="36" selection-start-line="248" selection-start-column="36" selection-end-line="248" selection-end-column="37" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/utilities/TransactionUtilities.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.39427313">
-          <caret line="64" column="68" selection-start-line="64" selection-start-column="68" selection-end-line="64" selection-end-column="68" />
-          <folding>
-            <element signature="n#!!doc;n#createTransactionSummaries#0;n#TransactionUtilities#0" expanded="false" />
-            <element signature="n#!!doc;n#createAdjustmentSummary#0;n#TransactionUtilities#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.21806167">
-          <caret line="11" column="38" selection-start-line="11" selection-start-column="38" selection-end-line="11" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$APPLICATION_HOME_DIR$/plugins/JavaScriptLanguage/typescriptCompiler/external/lib.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33259913">
-          <caret line="1107" column="4" selection-start-line="1107" selection-start-column="4" selection-end-line="1107" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/services/TransactionService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.42666668">
-          <caret line="208" column="52" selection-start-line="208" selection-start-column="52" selection-end-line="208" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/services/interfaces/ITransactionService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.34666666">
-          <caret line="13" column="146" selection-start-line="13" selection-start-column="146" selection-end-line="13" selection-end-column="146" />
+        <state vertical-scroll-proportion="0.2973568">
+          <caret line="15" column="54" selection-start-line="15" selection-start-column="54" selection-end-line="15" selection-end-column="54" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/routes/transactions.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="436" column="31" selection-start-line="436" selection-start-column="31" selection-end-line="436" selection-end-column="31" />
-          <folding>
-            <element signature="e#6645#9947#0" expanded="false" />
-            <element signature="e#10125#12227#0" expanded="false" />
-            <element signature="e#12424#14555#0" expanded="false" />
-            <element signature="e#14733#16414#0" expanded="false" />
-            <element signature="e#16596#17583#0" expanded="false" />
-            <element signature="e#17768#18311#0" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.33590308">
+          <caret line="17" column="67" selection-start-line="17" selection-start-column="67" selection-end-line="17" selection-end-column="67" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/Database.ts">
+    <entry file="file://$PROJECT_DIR$/routes/users.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.4680617">
-          <caret line="253" column="36" selection-start-line="253" selection-start-column="36" selection-end-line="253" selection-end-column="36" />
+        <state vertical-scroll-proportion="0.25770926">
+          <caret line="13" column="35" selection-start-line="13" selection-start-column="35" selection-end-line="13" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/utilities/DateUtilitiesSpec.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3321918">
+          <caret line="32" column="42" selection-start-line="32" selection-start-column="42" selection-end-line="32" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/utilities/DateUtilitiesSpec.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.37265712">
+          <caret line="51" column="19" selection-start-line="51" selection-start-column="19" selection-end-line="51" selection-end-column="19" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/tests/database/UserDalSpec.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.69018745">
+          <caret line="295" column="25" selection-start-line="295" selection-start-column="25" selection-end-line="295" selection-end-column="25" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/database/TransactionTypeDal.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="230" column="17" selection-start-line="230" selection-start-column="17" selection-end-line="230" selection-end-column="17" />
-          <folding />
+        <state vertical-scroll-proportion="0.2216097">
+          <caret line="61" column="105" selection-start-line="61" selection-start-column="105" selection-end-line="61" selection-end-column="105" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/reference.ts">
+    <entry file="file://$PROJECT_DIR$/utilities/CollectionUtilities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0892562">
-          <caret line="3" column="77" selection-start-line="3" selection-start-column="77" selection-end-line="3" selection-end-column="77" />
+        <state vertical-scroll-proportion="0.15876517">
+          <caret line="8" column="47" selection-start-line="8" selection-start-column="47" selection-end-line="8" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/typings/angular-ui-router/angular-ui-router.d.ts">
+    <entry file="file://$PROJECT_DIR$/utilities/DateUtilities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334">
-          <caret line="154" column="60" selection-start-line="154" selection-start-column="57" selection-end-line="154" selection-end-column="60" />
-          <folding>
-            <element signature="n#!!doc" expanded="false" />
-          </folding>
+        <state vertical-scroll-proportion="0.25799337">
+          <caret line="13" column="43" selection-start-line="13" selection-start-column="43" selection-end-line="13" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/typings/angular-ui-bootstrap/angular-ui-bootstrap.d.ts">
+    <entry file="file://$PROJECT_DIR$/utilities/ObjectUtilities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.0947137">
-          <caret line="282" column="14" selection-start-line="282" selection-start-column="14" selection-end-line="282" selection-end-column="14" />
-          <folding />
+        <state vertical-scroll-proportion="0.37706727">
+          <caret line="19" column="49" selection-start-line="19" selection-start-column="49" selection-end-line="19" selection-end-column="49" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/UserEditController.ts">
+    <entry file="file://$PROJECT_DIR$/utilities/UuidUtilities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="44" column="19" selection-start-line="44" selection-start-column="19" selection-end-line="44" selection-end-column="19" />
-          <folding />
+        <state vertical-scroll-proportion="0.19845645">
+          <caret line="10" column="47" selection-start-line="10" selection-start-column="47" selection-end-line="10" selection-end-column="47" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/confirm-modal.html">
+    <entry file="file://$PROJECT_DIR$/utilities/TransactionUtilities.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.3333335">
-          <caret line="11" column="6" selection-start-line="11" selection-start-column="6" selection-end-line="11" selection-end-column="6" />
-          <folding />
+        <state vertical-scroll-proportion="0.18632856">
+          <caret line="424" column="65" selection-start-line="424" selection-start-column="65" selection-end-line="424" selection-end-column="65" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/services/interfaces/ILoginService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.2973568">
-          <caret line="15" column="39" selection-start-line="15" selection-start-column="39" selection-end-line="15" selection-end-column="39" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/LoginController.ts">
+    <entry file="file://$PROJECT_DIR$/gruntfile.js">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/Database.js">
+    <entry file="file://$PROJECT_DIR$/public/dist/app.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5602537">
-          <caret line="32" column="38" selection-start-line="32" selection-start-column="38" selection-end-line="32" selection-end-column="38" />
-          <folding />
+        <state vertical-scroll-proportion="19.54796">
+          <caret line="985" column="43" selection-start-line="985" selection-start-column="43" selection-end-line="985" selection-end-column="43" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/database/TransactionDal.ts">
+    <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="99" column="44" selection-start-line="99" selection-start-column="44" selection-end-line="99" selection-end-column="44" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/UserController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.8372093">
-          <caret line="22" column="33" selection-start-line="22" selection-start-column="33" selection-end-line="22" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/services/LoginService.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.4249471">
-          <caret line="288" column="52" selection-start-line="288" selection-start-column="52" selection-end-line="288" selection-end-column="52" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/typings/financial-planning/financial-planning.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5704846">
-          <caret line="164" column="38" selection-start-line="164" selection-start-column="38" selection-end-line="164" selection-end-column="38" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/routes/users.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="184" column="5" selection-start-line="184" selection-start-column="5" selection-end-line="184" selection-end-column="5" />
-          <folding>
-            <element signature="e#4002#4131#0" expanded="false" />
-            <element signature="e#4318#5266#0" expanded="false" />
-            <element signature="e#5434#5608#0" expanded="false" />
-            <element signature="e#6385#6672#0" expanded="false" />
-            <element signature="e#6832#7913#0" expanded="false" />
-            <element signature="e#8066#8893#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/typings/angular-toasty/angular-toasty.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.09471366">
-          <caret line="108" column="14" selection-start-line="108" selection-start-column="14" selection-end-line="108" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/HomeController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="18" column="13" selection-start-line="18" selection-start-column="13" selection-end-line="18" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/app.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="118" column="134" selection-start-line="118" selection-start-column="78" selection-end-line="118" selection-end-column="134" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/dist/app.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33259913">
-          <caret line="219" column="14" selection-start-line="219" selection-start-column="14" selection-end-line="219" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/typings/angularjs/angular.d.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.35462555">
-          <caret line="465" column="11" selection-start-line="465" selection-start-column="7" selection-end-line="465" selection-end-column="11" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="7" column="43" selection-start-line="7" selection-start-column="43" selection-end-line="7" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.13876653">
-          <caret line="7" column="48" selection-start-line="7" selection-start-column="48" selection-end-line="7" selection-end-column="48" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0">
-          <caret line="35" column="9" selection-start-line="35" selection-start-column="9" selection-end-line="35" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6145374">
-          <caret line="91" column="59" selection-start-line="91" selection-start-column="59" selection-end-line="91" selection-end-column="59" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
@@ -804,92 +696,192 @@
         <state />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app.ts">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/HomeController.ts">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0">
-          <caret line="91" column="30" selection-start-line="91" selection-start-column="30" selection-end-line="91" selection-end-column="30" />
-          <folding />
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/index.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/LoginController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38819525">
-          <caret line="19" column="26" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
-          <folding />
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/stylesheets/style.css">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/IChartController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6275862">
-          <caret line="58" column="20" selection-start-line="58" selection-start-column="20" selection-end-line="58" selection-end-column="20" />
-          <folding />
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="7" selection-start-line="5" selection-start-column="7" selection-end-line="5" selection-end-column="55" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/new-user.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/IHomeController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.0">
-          <caret line="36" column="25" selection-start-line="36" selection-start-column="25" selection-end-line="36" selection-end-column="25" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#0;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#1;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#2;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#3;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#span#0;n#label#0;n#div#4;n#form#0;n#div#0;n#div#0;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="44" selection-start-line="5" selection-start-column="44" selection-end-line="5" selection-end-column="44" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/login.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/ILoginController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.088998765">
-          <caret line="4" column="52" selection-start-line="4" selection-start-column="52" selection-end-line="4" selection-end-column="52" />
-          <folding />
+        <state vertical-scroll-proportion="0.059471365">
+          <caret line="3" column="45" selection-start-line="3" selection-start-column="45" selection-end-line="3" selection-end-column="45" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/charts.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.30120483">
-          <caret line="46" column="67" selection-start-line="46" selection-start-column="67" selection-end-line="46" selection-end-column="67" />
-          <folding />
+        <state vertical-scroll-proportion="0.07929515">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="6" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/home.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/TransactionTypeController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24096386">
-          <caret line="10" column="19" selection-start-line="10" selection-start-column="19" selection-end-line="10" selection-end-column="19" />
-          <folding />
+        <state vertical-scroll-proportion="0.11894273">
+          <caret line="6" column="8" selection-start-line="6" selection-start-column="8" selection-end-line="9" selection-end-column="53" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/transactions.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/ITransactionTypeController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5301205">
-          <caret line="22" column="69" selection-start-line="22" selection-start-column="69" selection-end-line="22" selection-end-column="69" />
-          <folding>
-            <element signature="n#style#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-            <element signature="n#style#0;n#label#0;n#div#1;n#form#0;n#div#0;n#div#1;n#div#1;n#div#1;n#div#0;n#!!top" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="0.07929515">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="6" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/edit-user.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36144578">
-          <caret line="15" column="35" selection-start-line="15" selection-start-column="35" selection-end-line="15" selection-end-column="35" />
-          <folding />
+        <state vertical-scroll-proportion="0.039647575">
+          <caret line="2" column="4" selection-start-line="2" selection-start-column="4" selection-end-line="4" selection-end-column="7" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/public/templates/transaction-types.html">
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/UserController.ts">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3159304">
-          <caret line="32" column="39" selection-start-line="32" selection-start-column="39" selection-end-line="32" selection-end-column="39" />
+        <state vertical-scroll-proportion="0.25770926">
+          <caret line="13" column="59" selection-start-line="13" selection-start-column="59" selection-end-line="13" selection-end-column="59" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/interfaces/IUserEditController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.3171806">
+          <caret line="16" column="31" selection-start-line="16" selection-start-column="31" selection-end-line="16" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/UserEditController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.11894273">
+          <caret line="6" column="9" selection-start-line="6" selection-start-column="9" selection-end-line="8" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/IChartControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.07929515">
+          <caret line="4" column="4" selection-start-line="4" selection-start-column="4" selection-end-line="6" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/IHomeControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/ILoginControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="26" selection-start-line="5" selection-start-column="26" selection-end-line="5" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="32" selection-start-line="5" selection-start-column="32" selection-end-line="5" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/ITransactionTypeControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="38" selection-start-line="5" selection-start-column="38" selection-end-line="5" selection-end-column="38" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/IUserControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="5" column="42" selection-start-line="5" selection-start-column="42" selection-end-line="5" selection-end-column="42" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/scope/IUserEditControllerScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.09911894">
+          <caret line="5" column="30" selection-start-line="5" selection-start-column="30" selection-end-line="5" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/TransactionController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27753305">
+          <caret line="14" column="36" selection-start-line="14" selection-start-column="36" selection-end-line="14" selection-end-column="36" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/controllers/ChartController.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.059471365">
+          <caret line="3" column="1" selection-start-line="3" selection-start-column="1" selection-end-line="3" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/interfaces/IAppRootScope.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/services/interfaces/ITransactionService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/services/interfaces/ILoginService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/services/TransactionService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/services/LoginService.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0">
+          <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/public/javascripts/app.ts">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="3.469163">
+          <caret line="175" column="73" selection-start-line="175" selection-start-column="73" selection-end-line="175" selection-end-column="73" />
           <folding />
         </state>
       </provider>

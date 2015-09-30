@@ -1,6 +1,7 @@
 /// <reference path="../../reference.ts" />
 var FinancialPlanning;
 (function (FinancialPlanning) {
+    // Create the application and add controllers & services
     var app = angular.module('financialPlanning', ['ui.router', 'angular-toasty', 'chart.js', 'ui.bootstrap'])
         .controller('loginController', FinancialPlanning.LoginController)
         .controller('homeController', FinancialPlanning.HomeController)

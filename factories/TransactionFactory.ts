@@ -9,6 +9,16 @@ import UuidUtilities = require("../utilities/UuidUtilities");
  */
 class TransactionFactory
 {
+    /**
+     * Create a new transaction type object from the given parameters
+     * @param name
+     * @param paymentDirection
+     * @param classification
+     * @param userId
+     * @param isTaxable
+     * @param subClassification
+     * @returns {FinancialPlanning.Common.Transactions.ITransactionType}
+     */
     public static createNewTransactionType(name: string, paymentDirection: string, classification: string,
                                            userId: string, isTaxable: boolean, subClassification?: string): FinancialPlanning.Common.Transactions.ITransactionType
     {
@@ -59,6 +69,14 @@ class TransactionFactory
         return newTransactionType;
     }
 
+    /**
+     * Create a new transaction instance from the given parameters
+     * @param transactionTypeId
+     * @param userId
+     * @param date
+     * @param adjustment
+     * @returns {{transactionTypeId: string, userId: string, startDate: Date, adjustment: number, transactions: any[]}}
+     */
     public static createNewTransactionInstance(transactionTypeId: string, userId: string, date: Date, adjustment: number): FinancialPlanning.Common.Transactions.ITransactionInstance
     {
         if (!ObjectUtilities.isDefined(transactionTypeId, true))
@@ -96,6 +114,14 @@ class TransactionFactory
         };
     }
 
+    /**
+     * Create a new recurring transaction instance using the given parameters
+     * @param transactionTypeId
+     * @param userId
+     * @param date
+     * @param adjustment
+     * @returns {{transactionTypeId: string, userId: string, startDate: Date, adjustment: number, lastProcessedDate: null, isActive: boolean, transactions: Array<FinancialPlanning.Common.Transactions.ITransaction>}}
+     */
     public static createNewRecurringTransactionInstance(transactionTypeId: string, userId: string, date: Date, adjustment: number): FinancialPlanning.Common.Transactions.IRecurringTransactionInstance
     {
         if (!ObjectUtilities.isDefined(transactionTypeId, true))

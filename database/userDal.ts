@@ -7,20 +7,18 @@ import ObjectUtilities = require("../utilities/ObjectUtilities");
 
 var Promise = es6promise.Promise;
 
+/**
+ * Class that provides methods to interact with the users MongoDB collection
+ */
 class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUserDal
 {
-    /**
-     *
-     * @param dataStore
-     * @param collectionName
-     */
     constructor(dataStore: FinancialPlanning.Server.Database.IDatabase, collectionName: string = "Users")
     {
         super(dataStore, collectionName);
     }
 
     /**
-     *
+     * Get the specified user
      * @param userId
      * @returns {*}
      */
@@ -40,7 +38,7 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Create a new user with the provided data
      * @param user
      * @returns {*}
      */
@@ -71,11 +69,11 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Delete a user with the specified ID
      * @param userId
      * @returns {*}
      */
-    public deleteUser(userId: string): Promise<string>
+    public deleteUser(userId: string): Promise<boolean>
     {
         return new Promise((resolve, reject) =>
         {
@@ -89,11 +87,11 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
                 {
                     if (response)
                     {
-                        return resolve("Success");
+                        return resolve(true);
                     }
                     else
                     {
-                        return reject("Failure");
+                        return reject(false);
                     }
                 })
                 .catch((error: any) =>
@@ -111,7 +109,7 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Update the password hash for a user
      * @param userId
      * @param hash
      * @returns {*}
@@ -144,7 +142,7 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Update the preferred name for a user
      * @param userId
      * @param preferredName
      * @returns {Promise<any>}
@@ -176,7 +174,7 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Update the limit warning for a user
      * @param userId
      * @param limitWarning
      * @returns {Promise<any>}
@@ -208,7 +206,7 @@ class UserDal extends BaseDal implements FinancialPlanning.Server.Database.IUser
     }
 
     /**
-     *
+     * Update the balance for a user
      * @param userId
      * @param balance
      * @returns {*}

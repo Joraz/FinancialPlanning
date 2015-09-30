@@ -4,10 +4,13 @@ import jwt = require("jsonwebtoken");
 
 import ObjectUtilities = require("../utilities/ObjectUtilities");
 
+/**
+ * Contains methods for generating JSONWebTokens
+ */
 class TokenFactory
 {
     /**
-     *
+     * Given a userId, generate a new JSONWebToken with an expiry of 30 minutes
      * @param userId
      * @returns {string}
      */

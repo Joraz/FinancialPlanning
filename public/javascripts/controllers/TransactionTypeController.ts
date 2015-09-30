@@ -7,7 +7,6 @@ module FinancialPlanning
         public transactionTypes: Array<FinancialPlanning.Common.Transactions.ITransactionType>;
         public selectedTransaction: FinancialPlanning.Common.Transactions.ITransactionType;
         public transactionTypeEdit: ng.IFormController;
-
         public isNewTransactionType: boolean = false;
 
         public static $inject = ['$scope', 'transactionTypes', 'transactionService', 'toasty'];

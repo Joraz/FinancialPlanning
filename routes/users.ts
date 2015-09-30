@@ -15,8 +15,105 @@ import UserFactory = require("../factories/UserFactory");
 
 var router: express.Router = express.Router();
 
+// Contains route definitions for users
+
 /**
- * Create a new user. Will return a jsonwebtoken
+ * GET status of JSONWebToken
+ */
+router.get('/status', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    //if execution arrives here, then the token has been validated. We can just return an OK response to the client
+    return httpResponse.status(HttpCodes.ok).send({});
+});
+
+/**
+ * GET user summary information
+ */
+router.get('/summary', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var user = httpRequest.user;
+    var userSummary: FinancialPlanning.Common.Users.IUserSummary = {
+        name: user.options && user.options.preferredName ? user.options.preferredName : user._id,
+        balance: user.balance
+    };
+
+    if (user.options && !isNaN(user.options.lowLimitWarning))
+    {
+        userSummary.limitWarning = user.options.lowLimitWarning;
+    }
+    return httpResponse.status(HttpCodes.ok).send(userSummary);
+});
+
+/**
+ * GET user details
+ */
+router.get('/details', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let user = httpRequest.user;
+    let userDetails: FinancialPlanning.Common.Users.IUserDetails = {
+        preferredName: user.options.preferredName || "",
+        lowLimitWarning: user.options.lowLimitWarning
+    };
+    return httpResponse.status(HttpCodes.ok).send(userDetails);
+});
+
+/**
+ * GET balance summary
+ */
+router.get('/summary/balance', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var user = httpRequest.user;
+    var db = httpRequest.database;
+    var transactionDal = new TransactionDal(db);
+    var start = httpRequest.query.startDate;
+    if (!ObjectUtilities.isDefined(start, true))
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No start date provided");
+    }
+    var end = httpRequest.query.endDate;
+    if (!ObjectUtilities.isDefined(end, true))
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No end date provided");
+    }
+    var balance = user.balance;
+    var userId = user._id;
+
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            var summaries = TransactionUtilities.createBalanceSummary(transactions, new Date(start), new Date(end), balance);
+            return httpResponse.status(HttpCodes.ok).send(summaries);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * GET forecast summary
+ */
+router.get('/forecast', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    let currentBalance = httpRequest.user.balance;
+    let userId = httpRequest.user._id;
+    let db = httpRequest.database;
+    let transactionDal = new TransactionDal(db);
+    transactionDal.getTransactionsForUser(userId)
+        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
+        {
+            let filtered = transactions.filter(x => x.hasOwnProperty('isActive'));
+            let summaries = TransactionUtilities.createBalanceForecast(<Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>>filtered, currentBalance);
+            return httpResponse.status(HttpCodes.ok).send(summaries);
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * POST a new user
  */
 router.post('/', (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -76,7 +173,48 @@ router.post('/', (httpRequest: express.Request, httpResponse: express.Response) 
 });
 
 /**
- *
+ * POST a login request
+ */
+router.post('/login', passport.authenticate('local', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var jwt: string = TokenFactory.generateJWT(httpRequest.user._id);
+    return httpResponse.status(HttpCodes.ok).send(jwt);
+});
+
+/**
+ * POST a password update request
+ */
+router.post('/updatePassword', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
+{
+    var password = httpRequest.body.password;
+
+    if (!password)
+    {
+        return httpResponse.status(HttpCodes.badRequest).send("No Password provided");
+    }
+
+    HashFactory.createHash(password)
+        .then((hashResponse: FinancialPlanning.Server.Security.IPasswordHash) =>
+        {
+            var database = httpRequest.database;
+            var userDal = new UserDal(database);
+            var userId = httpRequest.user._id;
+
+            userDal.updatePassword(userId, {hash: hashResponse.hash, salt: hashResponse.salt})
+                .then((user: FinancialPlanning.Server.Users.IUser) =>
+                {
+                    var jwt = TokenFactory.generateJWT(user._id);
+                    return httpResponse.status(HttpCodes.ok).send(jwt);
+                });
+        })
+        .catch((error: any) =>
+        {
+            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
+        });
+});
+
+/**
+ * PUT an existing user
  */
 router.put('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {
@@ -119,143 +257,7 @@ router.put('/', passport.authenticate('jwt', {session: false}), (httpRequest: ex
 });
 
 /**
- * Login for user
- */
-router.post('/login', passport.authenticate('local', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var jwt: string = TokenFactory.generateJWT(httpRequest.user._id);
-    return httpResponse.status(HttpCodes.ok).send(jwt);
-});
-
-/**
- * Update password for a user
- */
-router.post('/updatePassword', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var password = httpRequest.body.password;
-
-    if (!password)
-    {
-        return httpResponse.status(HttpCodes.badRequest).send("No Password provided");
-    }
-
-    HashFactory.createHash(password)
-        .then((hashResponse: FinancialPlanning.Server.Security.IPasswordHash) =>
-        {
-            var database = httpRequest.database;
-            var userDal = new UserDal(database);
-            var userId = httpRequest.user._id;
-
-            userDal.updatePassword(userId, {hash: hashResponse.hash, salt: hashResponse.salt})
-                .then((user: FinancialPlanning.Server.Users.IUser) =>
-                {
-                    var jwt = TokenFactory.generateJWT(user._id);
-                    return httpResponse.status(HttpCodes.ok).send(jwt);
-                });
-        })
-        .catch((error: any) =>
-        {
-            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
-        });
-});
-
-/**
- * Check JWT status
- */
-router.get('/status', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    //if execution arrives here, then the token has been validated. We can just return an OK response to the client
-    return httpResponse.status(HttpCodes.ok).send({});
-});
-
-/**
- * Get user summary information
- */
-router.get('/summary', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var user = httpRequest.user;
-    var userSummary: FinancialPlanning.Common.Users.IUserSummary = {
-        name: user.options && user.options.preferredName ? user.options.preferredName : user._id,
-        balance: user.balance
-    };
-
-    if (user.options && !isNaN(user.options.lowLimitWarning))
-    {
-        userSummary.limitWarning = user.options.lowLimitWarning;
-    }
-    return httpResponse.status(HttpCodes.ok).send(userSummary);
-});
-
-/**
- *
- */
-router.get('/details', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    let user = httpRequest.user;
-    let userDetails: FinancialPlanning.Common.Users.IUserDetails = {
-        preferredName: user.options.preferredName || "",
-        lowLimitWarning: user.options.lowLimitWarning
-    };
-    return httpResponse.status(HttpCodes.ok).send(userDetails);
-});
-
-/**
- *
- */
-router.get('/summary/balance', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    var user = httpRequest.user;
-    var db = httpRequest.database;
-    var transactionDal = new TransactionDal(db);
-    var start = httpRequest.query.startDate;
-    if (!ObjectUtilities.isDefined(start, true))
-    {
-        return httpResponse.status(HttpCodes.badRequest).send("No start date provided");
-    }
-    var end = httpRequest.query.endDate;
-    if (!ObjectUtilities.isDefined(end, true))
-    {
-        return httpResponse.status(HttpCodes.badRequest).send("No end date provided");
-    }
-    var balance = user.balance;
-    var userId = user._id;
-
-    transactionDal.getTransactionsForUser(userId)
-        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
-        {
-            var summaries = TransactionUtilities.createBalanceSummary(transactions, new Date(start), new Date(end), balance);
-            return httpResponse.status(HttpCodes.ok).send(summaries);
-        })
-        .catch((error: any) =>
-        {
-            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
-        });
-});
-
-/**
- *
- */
-router.get('/forecast', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
-{
-    let currentBalance = httpRequest.user.balance;
-    let userId = httpRequest.user._id;
-    let db = httpRequest.database;
-    let transactionDal = new TransactionDal(db);
-    transactionDal.getTransactionsForUser(userId)
-        .then((transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>) =>
-        {
-            let filtered = transactions.filter(x => x.hasOwnProperty('isActive'));
-            let summaries = TransactionUtilities.createBalanceForecast(<Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>>filtered, currentBalance);
-            return httpResponse.status(HttpCodes.ok).send(summaries);
-        })
-        .catch((error: any) =>
-        {
-            return httpResponse.status(HttpCodes.internalServerError).send(error.message || error);
-        });
-});
-
-/**
- *
+ * DELETE user
  */
 router.delete('/', passport.authenticate('jwt', {session: false}), (httpRequest: express.Request, httpResponse: express.Response) =>
 {

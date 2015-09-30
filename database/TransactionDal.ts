@@ -10,6 +10,9 @@ import TransactionUtilities = require("../utilities/TransactionUtilities");
 
 var Promise = es6promise.Promise;
 
+/**
+ * Class that provides methods to interact with the transaction MongoDB collection
+ */
 class TransactionDal extends BaseDal
 {
     constructor(dataStore: FinancialPlanning.Server.Database.IDatabase, collectionName: string = "Transactions")
@@ -18,7 +21,7 @@ class TransactionDal extends BaseDal
     }
 
     /**
-     *
+     * Get the transaction with the specified ID
      * @param transactionId
      * @returns {*}
      */
@@ -38,10 +41,8 @@ class TransactionDal extends BaseDal
     }
 
     /**
-     *
+     * Get all transactions that belong to the specified user
      * @param userId
-     * @param startDate
-     * @param endDate
      * @returns {*}
      */
     public getTransactionsForUser(userId: string): Promise<Array<FinancialPlanning.Common.Transactions.ITransactionInstance>>
@@ -63,7 +64,7 @@ class TransactionDal extends BaseDal
     }
 
     /**
-     *
+     * Create a new transaction using the data provided
      * @param transaction
      * @returns {Promise<any>}
      */
@@ -83,9 +84,9 @@ class TransactionDal extends BaseDal
     }
 
     /**
-     *
+     * Delete all transactions that belong to a specified user
      * @param userId
-     * @returns {*}
+     * @returns {Promise<boolean>}
      */
     public deleteTransactionsForUser(userId: string): Promise<boolean>
     {
@@ -93,7 +94,7 @@ class TransactionDal extends BaseDal
         {
             if (!ObjectUtilities.isDefined(userId, true))
             {
-                return reject(new Error("No 'userId' parameter provided in TransactionDal::deleteTransaction()."));
+                return reject(new Error("No 'userId' parameter provided in TransactionDal::deleteTransactionsForUser()."));
             }
 
             this.getDataStore().deleteMultipleObjects(this.getCollectionName(), {"userId": userId})
@@ -115,6 +116,12 @@ class TransactionDal extends BaseDal
         });
     }
 
+    /**
+     * Update a transaction using the specified data
+     * @param transactionId
+     * @param transactionData
+     * @returns {*}
+     */
     public updateTransaction(transactionId: string, transactionData: FinancialPlanning.Common.Transactions.ITransactionInstance): Promise<FinancialPlanning.Common.Transactions.ITransactionInstance>
     {
         return new Promise((resolve, reject) =>
@@ -132,7 +139,7 @@ class TransactionDal extends BaseDal
     }
 
     /**
-     *
+     * Change the status of a recurring transaction to be active or not, based on its current state
      * @param transactionInstanceId
      * @returns {*}
      */

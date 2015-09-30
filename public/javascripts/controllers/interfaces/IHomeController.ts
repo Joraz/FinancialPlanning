@@ -2,10 +2,18 @@
 
 module FinancialPlanning
 {
+    /**
+     * Describes the properties of the home controller
+     */
     export interface IHomeController
     {
+        /**
+         * users name
+         */
         name: string;
+        /**
+         * users balance
+         */
         balance: number;
-        isActive(path: string): boolean;
     }
 }

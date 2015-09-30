@@ -4,6 +4,9 @@ import moment = require("moment");
 
 import ObjectUtilities = require("./ObjectUtilities");
 
+/**
+ * Class containing utility methods for dealing with Dates
+ */
 class DateUtilities
 {
     /**

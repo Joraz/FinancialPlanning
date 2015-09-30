@@ -9,12 +9,12 @@ import ObjectUtilities = require("./ObjectUtilities");
 import UuidUtilities = require("./UuidUtilities");
 
 /**
- * Static utility class for creating and parsing transactions and transaction types
+ * Utility class for dealing with transactions and transaction types
  */
 class TransactionUtilities
 {
     /**
-     *
+     * Apply any unprocessed transactions to the given balance and return it
      * @param transactionInstances
      * @param balance
      * @returns {number}
@@ -53,7 +53,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Filter out transaction types that do not belong to the given user
      * @param transactionTypes
      * @param userId
      * @returns {FinancialPlanning.Common.Transactions.ITransactionType[]}
@@ -78,7 +78,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Filter transactions by a date range. If no dates given will return the array unchanged
      * @param transactionInstances
      * @param startDate
      * @param endDate
@@ -130,7 +130,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Populate unprocessed transactions on a new recurring transaction instance to bring it up to date
      * @param fromDate
      * @returns {Array<FinancialPlanning.Common.Transactions.ITransaction>}
      */
@@ -178,7 +178,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Create unprocessed transactions on a recurring transaction instance to bring it up to date
      * @param transactionInstance
      * @param end
      * @returns {FinancialPlanning.Common.Transactions.IRecurringTransactionInstance}
@@ -242,7 +242,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Create transaction summaries from a transaction instance
      * @param transactionInstance
      * @param transactionTypeDal
      * @returns {Promise}
@@ -276,6 +276,14 @@ class TransactionUtilities
         });
     }
 
+    /**
+     * Create balance summaries from an array of transactions
+     * @param transactions
+     * @param startDate
+     * @param endDate
+     * @param currentBalance
+     * @returns {FinancialPlanning.Common.Users.IBalanceSummary[]}
+     */
     public static createBalanceSummary(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>, startDate: Date, endDate: Date, currentBalance: number): Array<FinancialPlanning.Common.Users.IBalanceSummary>
     {
         let dates = [];
@@ -316,7 +324,7 @@ class TransactionUtilities
     }
 
     /**
-     *
+     * Create adjustment summaries from an array of transactions
      * @param transactions
      */
     public static createAdjustmentSummary(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Server.Transactions.IAdjustmentSummary>
@@ -337,6 +345,11 @@ class TransactionUtilities
         return summaries;
     }
 
+    /**
+     * Filter out incoming transactions
+     * @param transactionInstances
+     * @returns {FinancialPlanning.Common.Transactions.ITransactionInstance[]}
+     */
     public static removeIncomingTransactions(transactionInstances: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.ITransactionInstance>
     {
         return transactionInstances.filter((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
@@ -345,6 +358,11 @@ class TransactionUtilities
         });
     }
 
+    /**
+     * Filter out outgoing transactions
+     * @param transactionInstances
+     * @returns {FinancialPlanning.Common.Transactions.ITransactionInstance[]}
+     */
     public static removeOutgoingTransactions(transactionInstances: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.ITransactionInstance>
     {
         return transactionInstances.filter((transactionInstance: FinancialPlanning.Common.Transactions.ITransactionInstance) =>
@@ -353,6 +371,12 @@ class TransactionUtilities
         });
     }
 
+    /**
+     * Create a balance forecast from current recurring transactions
+     * @param recurringTransactions
+     * @param balance
+     * @returns {Array<FinancialPlanning.Common.Users.IBalanceSummary>}
+     */
     public static createBalanceForecast(recurringTransactions: Array<FinancialPlanning.Common.Transactions.IRecurringTransactionInstance>,
                                         balance: number): Array<FinancialPlanning.Common.Users.IBalanceSummary>
     {
@@ -397,6 +421,11 @@ class TransactionUtilities
         return summaries;
     }
 
+    /**
+     * Create totals for the given transactions filtered by month
+     * @param transactions
+     * @returns {Array<FinancialPlanning.Common.Transactions.IMonthTotal>}
+     */
     public static totalTransactionsByMonth(transactions: Array<FinancialPlanning.Common.Transactions.ITransactionInstance>): Array<FinancialPlanning.Common.Transactions.IMonthTotal>
     {
         let totals: Array<FinancialPlanning.Common.Transactions.IMonthTotal> = [];

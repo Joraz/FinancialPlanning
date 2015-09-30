@@ -7,10 +7,13 @@ import ObjectUtilities = require("../utilities/ObjectUtilities");
 
 var Promise = es6promise.Promise;
 
+/**
+ * Contains functions relating to creating and checking password hashes
+ */
 class HashFactory
 {
     /**
-     *
+     * Given a string, create a hash and salt and return them
      * @param password
      * @returns {*}
      */
@@ -38,7 +41,7 @@ class HashFactory
                     }
                     else
                     {
-                        var pwHash: FinancialPlanning.Server.Security.IPasswordHash = {
+                        let pwHash: FinancialPlanning.Server.Security.IPasswordHash = {
                             hash: hash,
                             salt: salt
                         };
@@ -51,7 +54,7 @@ class HashFactory
     }
 
     /**
-     *
+     * Given a password and a hash, check if the password is valid
      * @param providedPassword
      * @param dbHash
      * @returns {*}

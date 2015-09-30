@@ -4,7 +4,6 @@ module FinancialPlanning
 {
     export class TransactionController implements ITransactionController
     {
-        public static $inject = ['$scope', 'transactionService', 'transactionTypes', 'transactionSummaries', 'toasty', 'recurringTransactions'];
         public selectedTransactionType: FinancialPlanning.Common.Transactions.ITransactionType;
         public selectedTransaction: FinancialPlanning.Common.Transactions.IRecurringTransactionInstance;
         public transactionTypes: Array<FinancialPlanning.Common.Transactions.ITransactionType>;
@@ -17,6 +16,8 @@ module FinancialPlanning
         public newTransactionDate: Date;
         public transactionSummaries: Array<FinancialPlanning.Common.Transactions.ITransactionSummary>;
         public transactionEdit: ng.IFormController;
+
+        public static $inject = ['$scope', 'transactionService', 'transactionTypes', 'transactionSummaries', 'toasty', 'recurringTransactions'];
 
         constructor(public $scope: FinancialPlanning.ITransactionControllerScope, public transactionService: ITransactionService,
                     transactionTypes: Array<FinancialPlanning.Common.Transactions.ITransactionType>,

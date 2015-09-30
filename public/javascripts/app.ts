@@ -2,6 +2,7 @@
 
 module FinancialPlanning
 {
+    // Create the application and add controllers & services
     var app = angular.module('financialPlanning', ['ui.router', 'angular-toasty', 'chart.js', 'ui.bootstrap'])
         .controller('loginController', LoginController)
         .controller('homeController', HomeController)
@@ -31,6 +32,7 @@ module FinancialPlanning
         .service('transactionService', TransactionService);
 
     app
+        // Configure the states of the application
         .config(['$stateProvider', '$urlRouterProvider', ($stateProvider: ng.ui.IStateProvider, $urlRouterProvider: ng.ui.IUrlRouterProvider) =>
         {
             $stateProvider
@@ -141,6 +143,7 @@ module FinancialPlanning
 
             $urlRouterProvider.otherwise('/login');
         }])
+        // Configure the toast provider
         .config(['toastyConfigProvider', (toastyConfigProvider: toasty.IToastyConfigProvider) =>
         {
             toastyConfigProvider.setConfig({
@@ -154,6 +157,7 @@ module FinancialPlanning
                 theme: 'bootstrap'
             })
         }])
+        // Configure ther chart colours
         .config(['ChartJsProvider', (ChartJsProvider) =>
         {
             ChartJsProvider.setOptions('Bar', {
@@ -162,13 +166,14 @@ module FinancialPlanning
 
             ChartJsProvider.setOptions('Doughnut', {
                 colours: ['#39AA4E', '#55BCA7', '#367AB7', '#605298', '#8C68A6', '#A974AC', '#AA3866', '#E75935',
-                '#ED7D3B', '#F7BC4E', '#F9ED5B', '#BDD44D']
+                    '#ED7D3B', '#F7BC4E', '#F9ED5B', '#BDD44D']
             });
 
             ChartJsProvider.setOptions('Line', {
                 colours: ['#1A663A']
             });
         }])
+        // Set the logic to intercept state changes and authenticate user
         .run(['$rootScope', '$state', 'loginService', 'toasty',
             ($rootScope: FinancialPlanning.IAppRootScope, $state: ng.ui.IStateService,
              loginService: FinancialPlanning.ILoginService, toasty: toasty.IToastyService) =>

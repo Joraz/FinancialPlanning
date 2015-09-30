@@ -11,19 +11,25 @@ var Promise = es6promise.Promise;
  */
 class Database implements FinancialPlanning.Server.Database.IDatabase
 {
+    /**
+     * Holds a reference to the localhost connection where the MongoDB instance is running
+     */
     private _connectionString: string;
+    /**
+     * Holds a reference to the NodeJS MongoDB driver object
+     */
     private _db: mongodb.Db;
 
     constructor(databaseName?: string)
     {
-        var serverName = "localhost";
-        var port = 27017;
+        let serverName = "localhost";
+        let port = 27017;
         databaseName = databaseName || "financial-planning";
         this._connectionString = "mongodb://" + serverName + ":" + port + "/" + databaseName;
     }
 
     /**
-     *
+     * Read a document from the specified collection using the match provided
      * @param collectionName
      * @param match
      * @param fields
@@ -59,7 +65,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Read the entire collection and return all documents that match the given match
      * @param collectionName
      * @param match
      * @param fields
@@ -96,7 +102,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Write a document to the specified collection
      * @param collectionName
      * @param data
      * @returns {*}
@@ -117,9 +123,10 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
 
                         var insertionResult = result.result;
                         var ops = result.ops;
-                        //check the result
+                        //check the result count
                         if (insertionResult && insertionResult.n && insertionResult.n > 0)
                         {
+                            // ops stores the documents that were inserted
                             return resolve(ops[0]);
                         }
                         else
@@ -135,6 +142,12 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
         });
     }
 
+    /**
+     * Write multiple objects to the specified collection
+     * @param collectionName
+     * @param data
+     * @returns {*}
+     */
     public writeMultipleObjects(collectionName: string, data: Array<any>): Promise<any>
     {
         return new Promise((resolve, reject) =>
@@ -170,7 +183,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Update a document in the specified collection using the match provided
      * @param collectionName
      * @param match
      * @param data
@@ -206,7 +219,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Delete a document in the specified collection that matches the given match
      * @param collectionName
      * @param match
      * @returns {*}
@@ -244,6 +257,12 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
         });
     }
 
+    /**
+     * Delete any documents that match the given match
+     * @param collectionName
+     * @param match
+     * @returns {*}
+     */
     public deleteMultipleObjects(collectionName: string, match: any): Promise<any>
     {
         return new Promise((resolve, reject) =>
@@ -278,7 +297,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Delete the specified collection
      * @param collectionName
      * @returns {*}
      */
@@ -303,7 +322,7 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Close the MongoDB instance
      */
     public close(): void
     {
@@ -314,8 +333,8 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
-     * @returns {*}
+     * Return the MongoDb instance
+     * @returns {mongodb.Db}
      */
     private getDb(): Promise<mongodb.Db>
     {
@@ -342,9 +361,9 @@ class Database implements FinancialPlanning.Server.Database.IDatabase
     }
 
     /**
-     *
+     * Return the specified MongoDB collection
      * @param collectionName
-     * @returns {*}
+     * @returns {mongodb.Collection}
      */
     private getCollection(collectionName: string): Promise<mongodb.Collection>
     {

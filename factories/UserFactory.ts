@@ -7,10 +7,13 @@ import ObjectUtilities = require("../utilities/ObjectUtilities");
 
 var Promise = es6promise.Promise;
 
+/**
+ * Static class to create users
+ */
 class UserFactory
 {
     /**
-     *
+     * Create a new user using the provided parameters
      * @param username
      * @param password
      * @param balance

@@ -4,7 +4,6 @@ module FinancialPlanning
 {
     export class UserController implements IUserController
     {
-        private loginService: ILoginService;
 
         public username = "";
         public password = "";
@@ -14,10 +13,9 @@ module FinancialPlanning
 
         public static $inject = ['$scope', '$state', 'loginService', 'toasty'];
 
-        constructor(public $scope: IUserControllerScope, public $state: ng.ui.IStateService, loginService: ILoginService, public toasty: toasty.IToastyService)
+        constructor(public $scope: IUserControllerScope, public $state: ng.ui.IStateService, private loginService: ILoginService, public toasty: toasty.IToastyService)
         {
             $scope.vm = this;
-            this.loginService = loginService;
         }
 
         public createUser(): void

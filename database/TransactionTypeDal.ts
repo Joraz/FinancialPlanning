@@ -11,7 +11,9 @@ import TransactionUtilities = require("../utilities/TransactionUtilities");
 
 var Promise = es6promise.Promise;
 
-
+/**
+ * Class that provides methods to interact with the transactionType MongoDB collection
+ */
 class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Database.ITransactionTypeDal
 {
     constructor(dataStore: FinancialPlanning.Server.Database.IDatabase, collectionName: string = "TransactionTypes")
@@ -20,7 +22,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Create a new transaction type using the data provided
      * @param transactionType
      * @returns {*}
      */
@@ -40,7 +42,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Get a transaction type by its unique ID. If it has a userId property, it must match the given userId
      * @param transactionTypeId
      * @param userId
      * @returns {*}
@@ -73,7 +75,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Get all transaction types that are default or belong to the specified user
      * @param userId
      * @returns {*}
      */
@@ -92,7 +94,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Delete a given transaction type
      * @param transactionTypeId
      * @returns {any}
      */
@@ -132,9 +134,8 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Update a transaction type using the given parameters
      * @param transactionTypeId
-     * @param paymentDirection
      * @param name
      * @param classification
      * @param subClassification
@@ -183,7 +184,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Check whether or not a transaction type with the given ID exists in the datastore
      * @param transactionTypeId
      * @returns {*}
      */
@@ -209,7 +210,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
     }
 
     /**
-     *
+     * Delete all transaction types belonging to the specified user
      * @param userId
      * @returns {*}
      */
@@ -219,7 +220,7 @@ class TransactionTypeDal extends BaseDal implements FinancialPlanning.Server.Dat
         {
             if (!ObjectUtilities.isDefined(userId, true))
             {
-                return reject(new Error("No 'userId' parameter provided in TransactionTypeDal::deleteAllTransactionsForUser()."));
+                return reject(new Error("No 'userId' parameter provided in TransactionTypeDal::deleteAllTransactionTypesForUser()."));
             }
 
             this.getDataStore().deleteMultipleObjects(this.getCollectionName(), {"userId": userId})

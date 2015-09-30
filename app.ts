@@ -1,36 +1,40 @@
 /// <reference path="typings/tsd.d.ts" />
 
+// import 3rd party modules
 import express = require("express");
 import passport = require("passport");
 import passportLocal = require("passport-local");
 import passportJWT = require("passport-jwt");
 
+// import application modules
 import Database = require("./database/Database");
 import HashFactory = require("./factories/HashFactory");
 import TransactionDal = require("./database/TransactionDal");
 import TransactionFactory = require("./factories/TransactionFactory");
 import UserDal = require("./database/UserDal");
 
+// import the body-parser for request
 var bodyParser = require("body-parser");
-var favicon = require("serve-favicon");
+
+// import the exported routes for the application
 var transactions = require("./routes/transactions");
 var users = require("./routes/users");
 
+// create the global database object
 var database: FinancialPlanning.Server.Database.IDatabase = new Database();
 var userDal: UserDal = new UserDal(database);
 
 // App setup
 var app = express();
 
+// set application options
 app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(passport.initialize());
-app.use(favicon(__dirname + '/public/images/favicon.ico'));
 
 /**
- * This will add the global database object onto all requests
- * TODO maybe limit to requests that need it?
+ * This middleware will add the global database object onto all requests
  */
 app.use((request: express.Request, response: express.Response, next: Function) =>
 {
@@ -39,7 +43,7 @@ app.use((request: express.Request, response: express.Response, next: Function) =
 });
 
 /**
- * Strategy for logging in
+ * Strategy for logging in with username & password
  */
 passport.use(new passportLocal.Strategy((username: string, password: string, done: Function) =>
 {
@@ -65,6 +69,7 @@ passport.use(new passportLocal.Strategy((username: string, password: string, don
         });
 }));
 
+// JWT strategy options
 var options: passportJWT.IJwtStrategyOptions = {
     secretOrKey: "3CF5434AE17036B3F0D32F67AAF9F875F35E0498F1D78F335625BA19E5C38592",
     passReqToCallback: true
@@ -86,7 +91,9 @@ passport.use(new passportJWT.Strategy(options, (request: express.Request, jwt_pa
         });
 }));
 
+// Use the imported routes
 app.use('/users', users);
 app.use('/transactions', transactions);
 
+// Run the server
 var server = app.listen(3000);
